@@ -1,0 +1,43 @@
+Liste des fonctionnalités du site : 
+
+
+Barre de recherche : prof, cours, filliére, branche, lieu, crédits, catégories
+
+Prof : 
+
+Inscription
+Créer un cours (Modif)
+Voir ses cours
+Fermer les cours
+Page personnel (cours enseigné, mail de contat...)
+Evaluer les éléves
+FAQ (répondre au question des éléves)
+
+
+Eléves : 
+Inscription
+Voir les cours
+Voir leurs crédits
+Voir leur évaluation
+Evaluer le cours
+
+
+Avis: 
+
+Upvote
+note sur 20 avec 5 points par catégories
+
+
+
+Cours : 
+
+
+Trier (Branche, filliére, catégories, lieu)
+Limite de place
+Localisation
+Nombre de crédits
+Programme de cours
+Bibliographie
+Liste des profs
+(Vidéo de présentation)
+Sondage de fin de semestre
