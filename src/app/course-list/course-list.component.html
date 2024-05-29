@@ -9,6 +9,24 @@
         </select>
       </div>
       <div class="mb-3">
+        <label for="branchFilter" class="form-label">Branche</label>
+        <select id="branchFilter" class="form-select" [(ngModel)]="selectedBranch" (change)="filterCourses()">
+          <option *ngFor="let branch of branches" [value]="branch">{{ branch }}</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="majorFilter" class="form-label">Filière</label>
+        <select id="majorFilter" class="form-select" [(ngModel)]="selectedMajor" (change)="filterCourses()">
+          <option *ngFor="let major of majors" [value]="major">{{ major }}</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="locationFilter" class="form-label">Location</label>
+        <select id="locationFilter" class="form-select" [(ngModel)]="selectedLocation" (change)="filterCourses()">
+          <option *ngFor="let location of locations" [value]="location">{{ location }}</option>
+        </select>
+      </div>
+      <div class="mb-3">
         <label for="searchText" class="form-label">Recherche</label>
         <input type="text" id="searchText" class="form-control" [(ngModel)]="searchText" (input)="filterCourses()">
       </div>
@@ -18,10 +36,12 @@
       <div class="course-list">
         <div *ngFor="let course of filteredCourses" class="card mb-3">
           <div class="card-body">
-            <h5 class="card-title">{{ course.courseName }}</h5>
-            <p class="card-text"><strong>Professeur:</strong> {{ course.prof }}</p>
-            <p class="card-text"><strong>Crédits:</strong> {{ course.credits }}</p>
+            <h5 class="card-title">
+              <a [routerLink]="['/course', course.courseCode]">{{ course.courseName }}</a>
+            </h5>
+            <p class="card-text"><strong>Professeur(s):</strong> {{ course.teachers.join(', ') }}</p>
             <p class="card-text"><strong>Catégories:</strong> {{ course.categories.join(', ') }}</p>
+            <p class="card-text"><strong>Location:</strong> {{ course.location }}</p>
           </div>
         </div>
       </div>

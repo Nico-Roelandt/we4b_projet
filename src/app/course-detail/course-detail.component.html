@@ -1,0 +1,15 @@
+<div *ngIf="course">
+    <h2>{{ course.courseName }}</h2>
+    <p><strong>Code:</strong> {{ course.courseCode }}</p>
+    <p><strong>Professeur(s):</strong> {{ course.teachers.join(', ') }}</p>
+    <p><strong>Responsable:</strong> {{ course.manager_course }}</p>
+    <p><strong>Crédits:</strong> {{ course.credits }}</p>
+    <p><strong>Sièges:</strong> {{ course.seat }}</p>
+    <p><strong>Inscrits:</strong> {{ course.students_registered }}</p>
+    <p><strong>Bibliographie:</strong> {{ course.bibliography }}</p>
+    <p><strong>Catégories:</strong> {{ course.categories.join(', ') }}</p>
+    <p><strong>Branche:</strong> {{ course.branche }}</p>
+    <p><strong>Filière:</strong> {{ course.filiere }}</p>
+    <p><strong>Location:</strong> {{ course.location }}</p>
+  </div>
+  

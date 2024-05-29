@@ -6,17 +6,31 @@ import { Component } from '@angular/core';
   styleUrls: ['./courses.component.css']
 })
 export class CoursesComponent {
-  prof: string;
+  manager_course: string;
+  teachers: string[];
   categories: string[];
   courseName: string;
   courseCode: string;
+  branche: string;
+  filiere: string;
   credits: number;
+  seat: number;
+  students_registered: number;
+  bibliography: string;
+  location: string;
 
   constructor() {
-    this.prof = 'Nom du professeur';
-    this.categories = ['Catégorie 1', 'Catégorie 2', 'Catégorie 3'];
-    this.courseName = 'Nom du cours';
-    this.courseCode = 'Code du cours';
+    this.manager_course = 'Nom du responsable';
+    this.teachers = ['Undefined'];
+    this.categories = ['Undefined'];
+    this.courseName = 'Undefined';
+    this.courseCode = 'Undefined';
     this.credits = 3;
+    this.branche = 'Undefined';
+    this.filiere = 'Undefined';
+    this.seat = 30;
+    this.students_registered = 0;
+    this.bibliography = 'Undefined';
+    this.location = 'Undefined';
   }
 }

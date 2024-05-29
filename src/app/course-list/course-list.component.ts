@@ -11,21 +11,37 @@ export class CourseListComponent implements OnInit {
   filteredCourses: any[] = [];
   searchText: string = '';
   selectedCategory: string = 'All';
+  selectedBranch: string = 'All';
+  selectedMajor: string = 'All';
+  selectedLocation: string = 'All';
 
   categories: string[] = ['All', 'Mathématiques', 'Informatique', 'Science'];
+  branches: string[] = ['All', 'Branche A', 'Branche B'];
+  majors: string[] = ['All', 'Filiere 1', 'Filiere 2'];
+  locations: string[] = ['All', 'Location 1', 'Location 2'];
 
-  constructor(private courseService: CourseService) { }
+  constructor(private courseService: CourseService) {
+    console.log('CourseListComponent constructor called');
+  }
 
   ngOnInit(): void {
+    console.log('ngOnInit called');
     this.courses = this.courseService.getCourses();
+    console.log('Courses loaded:', this.courses);
     this.filteredCourses = this.courses;
+    console.log('Filtered courses initialized:', this.filteredCourses);
   }
 
   filterCourses() {
+    console.log('Filtering courses');
     this.filteredCourses = this.courses.filter(course => {
       return (this.selectedCategory === 'All' || course.categories.includes(this.selectedCategory)) &&
+             (this.selectedBranch === 'All' || course.branche === this.selectedBranch) &&
+             (this.selectedMajor === 'All' || course.filiere === this.selectedMajor) &&
+             (this.selectedLocation === 'All' || course.location === this.selectedLocation) &&
              (course.courseName.toLowerCase().includes(this.searchText.toLowerCase()) || 
-              course.prof.toLowerCase().includes(this.searchText.toLowerCase()));
+              course.teachers.some((teacher: string) => teacher.toLowerCase().includes(this.searchText.toLowerCase())));
     });
+    console.log('Filtered courses:', this.filteredCourses);
   }
 }

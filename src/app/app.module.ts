@@ -9,13 +9,15 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { CoursesComponent } from './courses/courses.component';
 import { CourseListComponent } from './course-list/course-list.component';
 import { CourseService } from './course.service';
+import { CourseDetailComponent } from './course-detail/course-detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     CoursesComponent,
-    CourseListComponent
+    CourseListComponent,
+    CourseDetailComponent
   ],
   imports: [
     BrowserModule,

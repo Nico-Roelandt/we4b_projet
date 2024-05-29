@@ -1,11 +1,14 @@
 <div class="course">
-    <h2>{{ courseName }}</h2>
-    <p><strong>Code:</strong> {{ courseCode }}</p>
-    <p><strong>Professeur:</strong> {{ prof }}</p>
-    <p><strong>Crédits:</strong> {{ credits }}</p>
-    <p><strong>Catégories:</strong></p>
-    <ul>
-      <li *ngFor="let category of categories">{{ category }}</li>
-    </ul>
-  </div>
-  
+  <h2>{{ courseName }}</h2>
+  <p><strong>Code:</strong> {{ courseCode }}</p>
+  <p><strong>Professeur(s):</strong> {{ teachers.join(', ') }}</p>
+  <p><strong>Responsable:</strong> {{ manager_course }}</p>
+  <p><strong>Crédits:</strong> {{ credits }}</p>
+  <p><strong>Sièges:</strong> {{ seat }}</p>
+  <p><strong>Inscrits:</strong> {{ students_registered }}</p>
+  <p><strong>Bibliographie:</strong> {{ bibliography }}</p>
+  <p><strong>Catégories:</strong> {{ categories.join(', ') }}</p>
+  <p><strong>Branche:</strong> {{ branche }}</p>
+  <p><strong>Filière:</strong> {{ filiere }}</p>
+  <p><strong>Location:</strong> {{ location }}</p>
+</div>
