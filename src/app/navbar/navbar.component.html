@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">University Courses</a>
+    <a class="navbar-brand" href="#">Cours Universitaires</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -14,7 +14,12 @@
         <input class="form-control me-2" type="search" placeholder="Recherche" aria-label="Recherche">
         <button class="btn btn-outline-success" type="submit">Recherche</button>
       </form>
-      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0" *ngIf="!authService.isLoggedIn()">
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Connexion</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0" *ngIf="authService.isLoggedIn()">
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Compte
@@ -23,10 +28,43 @@
             <li><a class="dropdown-item" href="#">Profil</a></li>
             <li><a class="dropdown-item" href="#">Paramètres</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Déconnexion</a></li>
+            <li><a class="dropdown-item" (click)="logout()">Déconnexion</a></li>
           </ul>
         </li>
       </ul>
     </div>
   </div>
 </nav>
+
+<!-- Modal de Connexion -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModalLabel">Connexion</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Onglets pour choisir entre étudiant et professeur -->
+        <ul class="nav nav-tabs" id="loginTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="student-tab" data-bs-toggle="tab" data-bs-target="#student" type="button" role="tab" aria-controls="student" aria-selected="true">Étudiant</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="teacher-tab" data-bs-toggle="tab" data-bs-target="#teacher" type="button" role="tab" aria-controls="teacher" aria-selected="false">Professeur</button>
+          </li>
+        </ul>
+        <div class="tab-content" id="loginTabContent">
+          <div class="tab-pane fade show active" id="student" role="tabpanel" aria-labelledby="student-tab">
+            <!-- Formulaire de Connexion Étudiant -->
+            <app-login [role]="'student'"></app-login>
+          </div>
+          <div class="tab-pane fade" id="teacher" role="tabpanel" aria-labelledby="teacher-tab">
+            <!-- Formulaire de Connexion Professeur -->
+            <app-login [role]="'teacher'"></app-login>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

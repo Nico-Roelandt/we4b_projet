@@ -1,0 +1,12 @@
+<form (ngSubmit)="login()">
+    <div class="mb-3">
+      <label for="student_id" class="form-label">Numéro d'étudiant</label>
+      <input type="text" id="student_id" class="form-control" [(ngModel)]="student_id" name="student_id" required>
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Mot de passe</label>
+      <input type="password" id="password" class="form-control" [(ngModel)]="password" name="password" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Se connecter</button>
+  </form>
+  

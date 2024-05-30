@@ -15,10 +15,10 @@ export class CourseListComponent implements OnInit {
   selectedMajor: string = 'All';
   selectedLocation: string = 'All';
 
-  categories: string[] = ['All', 'Mathématiques', 'Informatique', 'Science'];
-  branches: string[] = ['All', 'Branche A', 'Branche B'];
-  majors: string[] = ['All', 'Filiere 1', 'Filiere 2'];
-  locations: string[] = ['All', 'Location 1', 'Location 2'];
+  categories: string[] = ['All', 'Théorique', 'Pratique', 'Langues', 'Humanités'];
+  branches: string[] = ['All', 'Informatique', 'Mécanique', 'Electrique', 'Design', 'Systéme industriel'];
+  majors: string[] = ['All', 'Informatique : Monde virtuel', 'Informatique : IA'];
+  locations: string[] = ['All', 'Sevenans', 'Belfort', 'Montbéliard'];
 
   constructor(private courseService: CourseService) {
     console.log('CourseListComponent constructor called');

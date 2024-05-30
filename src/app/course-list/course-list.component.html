@@ -21,7 +21,7 @@
         </select>
       </div>
       <div class="mb-3">
-        <label for="locationFilter" class="form-label">Location</label>
+        <label for="locationFilter" class="form-label">Localisation</label>
         <select id="locationFilter" class="form-select" [(ngModel)]="selectedLocation" (change)="filterCourses()">
           <option *ngFor="let location of locations" [value]="location">{{ location }}</option>
         </select>
@@ -41,7 +41,7 @@
             </h5>
             <p class="card-text"><strong>Professeur(s):</strong> {{ course.teachers.join(', ') }}</p>
             <p class="card-text"><strong>Catégories:</strong> {{ course.categories.join(', ') }}</p>
-            <p class="card-text"><strong>Location:</strong> {{ course.location }}</p>
+            <p class="card-text"><strong>Localisation:</strong> {{ course.location }}</p>
           </div>
         </div>
       </div>

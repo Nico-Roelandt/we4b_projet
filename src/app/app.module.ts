@@ -10,6 +10,8 @@ import { CoursesComponent } from './courses/courses.component';
 import { CourseListComponent } from './course-list/course-list.component';
 import { CourseService } from './course.service';
 import { CourseDetailComponent } from './course-detail/course-detail.component';
+import { LoginComponent } from './login/login.component';
+import { AuthService } from './auth.service';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,8 @@ import { CourseDetailComponent } from './course-detail/course-detail.component';
     NavbarComponent,
     CoursesComponent,
     CourseListComponent,
-    CourseDetailComponent
+    CourseDetailComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +29,10 @@ import { CourseDetailComponent } from './course-detail/course-detail.component';
     MatSlideToggleModule,
     FormsModule
   ],
-  providers: [CourseService],
+  providers: [
+    CourseService,
+    AuthService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
