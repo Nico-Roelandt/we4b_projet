@@ -12,6 +12,7 @@ import { CourseService } from './course.service';
 import { CourseDetailComponent } from './course-detail/course-detail.component';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './auth.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { AuthService } from './auth.service';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatSlideToggleModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [
     CourseService,

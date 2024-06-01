@@ -14,15 +14,16 @@
         <input class="form-control me-2" type="search" placeholder="Recherche" aria-label="Recherche">
         <button class="btn btn-outline-success" type="submit">Recherche</button>
       </form>
-      <ul class="navbar-nav ms-auto mb-2 mb-lg-0" *ngIf="!authService.isLoggedIn()">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0" *ngIf="authService.isLoggedIn()">
         <li class="nav-item">
           <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Connexion</a>
         </li>
       </ul>
-      <ul class="navbar-nav ms-auto mb-2 mb-lg-0" *ngIf="authService.isLoggedIn()">
+        
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0" *ngIf="!authService.isLoggedIn()">
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Compte
+            {{ authService.getUsername() }}
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="#">Profil</a></li>
@@ -57,14 +58,34 @@
         <div class="tab-content" id="loginTabContent">
           <div class="tab-pane fade show active" id="student" role="tabpanel" aria-labelledby="student-tab">
             <!-- Formulaire de Connexion Étudiant -->
-            <app-login [role]="'student'"></app-login>
+            <app-login [role]="'student'" (loginSuccess)="closeModal(); showSuccessToast($event)" (loginError)="showErrorToast($event)"></app-login>
           </div>
           <div class="tab-pane fade" id="teacher" role="tabpanel" aria-labelledby="teacher-tab">
             <!-- Formulaire de Connexion Professeur -->
-            <app-login [role]="'teacher'"></app-login>
+            <app-login [role]="'teacher'" (loginSuccess)="closeModal(); showSuccessToast($event)" (loginError)="showErrorToast($event)"></app-login>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toasts -->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+  <div id="successToast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        Connexion réussie
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Fermer"></button>
+    </div>
+  </div>
+  <div id="errorToast" class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        Échec de la connexion
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Fermer"></button>
     </div>
   </div>
 </div>
