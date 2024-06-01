@@ -47,13 +47,13 @@ export class NavbarComponent {
       if (modalInstance) {
         modalInstance.hide();
         modalElement.addEventListener('hidden.bs.modal', () => {
-          document.body.classList.remove('modal-open');
-          const modalBackdrop = document.querySelector('.modal-backdrop');
-          if (modalBackdrop) {
-            modalBackdrop.remove();
-          }
+          setTimeout(() => {
+            const modalBackdrops = document.querySelectorAll('.modal-backdrop');
+            modalBackdrops.forEach(backdrop => backdrop.remove());
+          }, 200); // Délai pour s'assurer que Bootstrap a terminé ses animations
         });
       }
     }
   }
+  
 }
