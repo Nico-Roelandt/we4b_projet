@@ -1,41 +1,16 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CourseService {
-  constructor() { }
+  private apiUrl = 'http://localhost:3000/courses';
 
-  getCourses() {
-    return [
-      {
-        manager_course: 'Responsable A',
-        teachers: ['Professeur A'],
-        categories: ['Mathématiques', 'Science'],
-        courseName: 'Calculus',
-        courseCode: 'MATH101',
-        branche: 'Branche A',
-        filiere: 'Filiere 1',
-        credits: 3,
-        seat: 30,
-        students_registered: 25,
-        bibliography: 'Book 1',
-        location: 'Location 1'
-      },
-      {
-        manager_course: 'Responsable B',
-        teachers: ['Professeur B'],
-        categories: ['Informatique'],
-        courseName: 'Algorithms',
-        courseCode: 'CS201',
-        branche: 'Branche B',
-        filiere: 'Filiere 2',
-        credits: 4,
-        seat: 40,
-        students_registered: 35,
-        bibliography: 'Book 2',
-        location: 'Location 2'
-      }
-    ];
+  constructor(private http: HttpClient) { }
+
+  getCourses(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
   }
 }

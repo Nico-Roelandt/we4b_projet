@@ -1,0 +1,27 @@
+<div class="student-center">
+    <h1>Centre Étudiant</h1>
+    <h2>Liste des cours</h2>
+    <ul>
+      <li *ngFor="let course of courses">
+        {{ course.name }}
+        <button (click)="viewCourseDetails(course.id)">Voir les détails</button>
+      </li>
+    </ul>
+  
+    <h2>Crédits: {{ credits }}</h2>
+  
+    <h2>Évaluations</h2>
+    <ul>
+      <li *ngFor="let assessment of assessments">
+        {{ assessment.courseName }} - {{ assessment.grade }}
+      </li>
+    </ul>
+  
+    <h2>Évaluer les cours</h2>
+    <div *ngFor="let course of courses">
+      <h3>{{ course.name }}</h3>
+      <textarea [(ngModel)]="course.feedback" placeholder="Entrez vos commentaires"></textarea>
+      <button (click)="submitFeedback(course.id, course.feedback)">Soumettre</button>
+    </div>
+  </div>
+  

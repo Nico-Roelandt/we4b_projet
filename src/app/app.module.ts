@@ -13,6 +13,8 @@ import { CourseDetailComponent } from './course-detail/course-detail.component';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './auth.service';
 import { HttpClientModule } from '@angular/common/http';
+import { StudentCenterComponent } from './student-center/student-center.component';
+import { TeacherCenterComponent } from './teacher-center/teacher-center.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { HttpClientModule } from '@angular/common/http';
     CoursesComponent,
     CourseListComponent,
     CourseDetailComponent,
-    LoginComponent
+    LoginComponent,
+    StudentCenterComponent,
+    TeacherCenterComponent
   ],
   imports: [
     BrowserModule,

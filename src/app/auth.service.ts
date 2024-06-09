@@ -11,6 +11,7 @@ export class AuthService {
   private isAuthenticated: boolean = false;
   private role: string = '';
   private username: string = '';
+  private userId: number = 0;
 
   constructor(private http: HttpClient) { }
 
@@ -22,6 +23,7 @@ export class AuthService {
             this.isAuthenticated = true;
             this.role = role;
             this.username = username; // Stocker le nom d'utilisateur
+            this.userId = users[0].id;
             return true;
           }
           return false;
@@ -47,4 +49,13 @@ export class AuthService {
   isLoggedIn(): boolean {
     return this.isAuthenticated;
   }
+
+  getStudentId(): number {
+    return this.userId;
+  }
+  
+  getTeacherId(): number {
+    return this.userId;
+  }
+  
 }

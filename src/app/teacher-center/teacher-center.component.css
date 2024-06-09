@@ -1,0 +1,61 @@
+.teacher-center {
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: auto;
+  }
+  
+  .teacher-center h1, .teacher-center h2 {
+    color: #333;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .teacher-center ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .teacher-center ul li {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .teacher-center ul li:last-child {
+    border-bottom: none;
+  }
+  
+  .teacher-center button {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .teacher-center button:hover {
+    background-color: #218838;
+  }
+  
+  .teacher-center textarea,
+  .teacher-center input[type="text"],
+  .teacher-center input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 10px;
+  }
+  
+  .teacher-center form {
+    margin-bottom: 30px;
+  }
+  

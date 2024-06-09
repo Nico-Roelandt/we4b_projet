@@ -17,6 +17,8 @@ export class CourseDetailComponent implements OnInit {
 
   ngOnInit(): void {
     const courseCode = this.route.snapshot.paramMap.get('courseCode');
-    this.course = this.courseService.getCourses().find(c => c.courseCode === courseCode);
+    this.courseService.getCourses().subscribe(courses => {
+      this.course = courses.find(c => c.courseCode === courseCode);
+    });
   }
 }

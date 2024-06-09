@@ -1,0 +1,33 @@
+<div class="teacher-center">
+    <h1>Centre Enseignant</h1>
+  
+    <h2>Créer un cours</h2>
+    <form (submit)="createCourse(course)">
+      <!-- Formulaire de création de cours -->
+      <div>
+        <label for="courseName">Nom du cours:</label>
+        <input id="courseName" [(ngModel)]="course.name" name="name">
+      </div>
+      <div>
+        <label for="courseDescription">Description:</label>
+        <input id="courseDescription" [(ngModel)]="course.description" name="description">
+      </div>
+      <button type="submit">Créer</button>
+    </form>
+  
+    <h2>Mes cours</h2>
+    <ul>
+      <li *ngFor="let course of courses">
+        {{ course.name }}
+        <button (click)="closeCourse(course.id)">Fermer</button>
+      </li>
+    </ul>
+  
+    <h2>Page personnelle</h2>
+    <p><strong>Email:</strong> {{ personalInfo.email }}</p>
+    <p><strong>Cours enseignés:</strong></p>
+    <ul>
+      <li *ngFor="let course of personalInfo.taughtCourses">{{ course }}</li>
+    </ul>
+  </div>
+  

@@ -9,6 +9,12 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/courses">Liste des cours</a>
         </li>
+        <li class="nav-item" *ngIf="authService.getRole() === 'student'">
+          <a class="nav-link" routerLink="/student-center">Centre Étudiant</a>
+        </li>
+        <li class="nav-item" *ngIf="authService.getRole() === 'teacher'">
+          <a class="nav-link" routerLink="/teacher-center">Centre Enseignant</a>
+        </li>
       </ul>
       <form class="d-flex mx-auto" role="search">
         <input class="form-control me-2" type="search" placeholder="Recherche" aria-label="Recherche">
