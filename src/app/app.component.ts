@@ -12,7 +12,5 @@ export class AppComponent implements OnInit {
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    // Charger l'état de connexion au démarrage de l'application
-    this.authService.loadUserFromLocalStorage();
   }
 }

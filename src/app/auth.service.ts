@@ -57,5 +57,5 @@ export class AuthService {
   getTeacherId(): number {
     return this.userId;
   }
-  
+
 }
