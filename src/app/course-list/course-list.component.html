@@ -10,7 +10,7 @@
       <div class="mb-3">
         <label for="categoryFilter" class="form-label">Catégorie</label>
         <select id="categoryFilter" class="form-select" [(ngModel)]="selectedCategory" (change)="filterCourses()">
-          <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+          <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
         </select>
       </div>
     </div>
@@ -19,7 +19,7 @@
       <div class="mb-3">
         <label for="branchFilter" class="form-label">Branche</label>
         <select id="branchFilter" class="form-select" [(ngModel)]="selectedBranch" (change)="filterCourses()">
-          <option *ngFor="let branch of branches" [value]="branch">{{ branch }}</option>
+          <option *ngFor="let branch of branches" [value]="branch.id">{{ branch.name }}</option>
         </select>
       </div>
     </div>
@@ -28,7 +28,7 @@
       <div class="mb-3">
         <label for="majorFilter" class="form-label">Filière</label>
         <select id="majorFilter" class="form-select" [(ngModel)]="selectedMajor" (change)="filterCourses()">
-          <option *ngFor="let major of majors" [value]="major">{{ major }}</option>
+          <option *ngFor="let major of majors" [value]="major.id">{{ major.name }}</option>
         </select>
       </div>
     </div>
@@ -37,7 +37,7 @@
       <div class="mb-3">
         <label for="locationFilter" class="form-label">Lieu</label>
         <select id="locationFilter" class="form-select" [(ngModel)]="selectedLocation" (change)="filterCourses()">
-          <option *ngFor="let location of locations" [value]="location">{{ location }}</option>
+          <option *ngFor="let location of locations" [value]="location.id">{{ location.name }}</option>
         </select>
       </div>
     </div>
@@ -66,9 +66,9 @@
           <tr *ngFor="let course of filteredCourses">
             <td>{{ course.courseName }}</td>
             <td>{{ course.courseCode }}</td>
-            <td>{{ course.branch }}</td>
-            <td>{{ course.major }}</td>
-            <td>{{ course.location }}</td>
+            <td>{{ getBranchName(course.branch) }}</td>
+            <td>{{ getMajorName(course.major) }}</td>
+            <td>{{ getLocationName(course.location) }}</td>
             <td><button class="btn btn-info" [routerLink]="['/courses', course.courseCode]">Information</button></td>
           </tr>
         </tbody>

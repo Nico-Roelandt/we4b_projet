@@ -15,10 +15,10 @@ export class CourseListComponent implements OnInit {
   selectedMajor: string = 'All';
   selectedLocation: string = 'All';
 
-  categories: string[] = ['All', 'Mathematics', 'Computer Science', 'Science'];
-  branches: string[] = ['All', 'Sciences', 'Technologies', 'Humanities'];
-  majors: string[] = ['All', 'Mathematics', 'Computer Science', 'Physics'];
-  locations: string[] = ['All', 'Room 101', 'Room 202', 'Room 303'];
+  categories: any[] = [{ id: 'All', name: 'All' }];
+  branches: any[] = [{ id: 'All', name: 'All' }];
+  majors: any[] = [{ id: 'All', name: 'All' }];
+  locations: any[] = [{ id: 'All', name: 'All' }];
 
   constructor(private courseService: CourseService) { }
 
@@ -26,6 +26,22 @@ export class CourseListComponent implements OnInit {
     this.courseService.getCourses().subscribe(courses => {
       this.courses = courses;
       this.filteredCourses = this.courses;
+    });
+    
+    this.courseService.getCategories().subscribe(categories => {
+      this.categories = [{ id: 'All', name: 'All' }, ...categories];
+    });
+
+    this.courseService.getBranches().subscribe(branches => {
+      this.branches = [{ id: 'All', name: 'All' }, ...branches];
+    });
+
+    this.courseService.getMajors().subscribe(majors => {
+      this.majors = [{ id: 'All', name: 'All' }, ...majors];
+    });
+
+    this.courseService.getLocations().subscribe(locations => {
+      this.locations = [{ id: 'All', name: 'All' }, ...locations];
     });
   }
 
@@ -37,5 +53,25 @@ export class CourseListComponent implements OnInit {
              (this.selectedLocation === 'All' || course.location === this.selectedLocation) &&
              (course.courseName.toLowerCase().includes(this.searchText.toLowerCase()));
     });
+  }
+
+  getBranchName(branchId: number): string {
+    const branch = this.branches.find(b => b.id === branchId);
+    return branch ? branch.name : 'Unknown';
+  }
+
+  getLocationName(locationId: number): string {
+    const location = this.locations.find(l => l.id === locationId);
+    return location ? location.name : 'Unknown';
+  }
+
+  getCategoryName(categoryId: number): string {
+    const category = this.categories.find(c => c.id === categoryId);
+    return category ? category.name : 'Unknown';
+  }
+
+  getMajorName(majorId: number): string {
+    const major = this.majors.find(m => m.id === majorId);
+    return major ? major.name : 'Unknown';
   }
 }
