@@ -9,6 +9,7 @@ import { CourseService } from '../course.service';
 })
 export class CourseDetailComponent implements OnInit {
   course: any;
+  reviews: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -17,8 +18,23 @@ export class CourseDetailComponent implements OnInit {
 
   ngOnInit(): void {
     const courseCode = this.route.snapshot.paramMap.get('courseCode');
-    this.courseService.getCourses().subscribe(courses => {
-      this.course = courses.find(c => c.courseCode === courseCode);
+    if (courseCode) {
+      this.courseService.getCourseByCourseCode(courseCode).subscribe(courses => {
+        if (courses.length > 0) {
+          this.course = courses[0];
+          this.loadReviews(this.course.id);
+        } else {
+          console.error('Course not found');
+        }
+      });
+    } else {
+      console.error('courseCode is null');
+    }
+  }
+
+  loadReviews(courseId: number): void {
+    this.courseService.getReviewsByCourseId(courseId).subscribe(reviews => {
+      this.reviews = reviews;
     });
   }
 }

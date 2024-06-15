@@ -20,7 +20,7 @@ export class CourseDetailComponent implements OnInit {
   ngOnInit(): void {
     const courseId = this.route.snapshot.paramMap.get('id');
     if (courseId) {
-      this.courseService.getCourseById(courseId).subscribe(course => {
+      this.courseService.getCourseByCourseCode(courseId).subscribe(course => {
         this.course = course;
         this.course.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.course.videoUrl);
       });

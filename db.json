@@ -16,33 +16,73 @@
   "courses": [
     {
       "id": 1,
-      "manager_course": "Responsable A",
-      "teachers": ["Professeur A"],
-      "categories": ["Mathématiques", "Science"],
+      "courseManager": "Manager A",
+      "teachers": ["Teacher A"],
+      "categories": ["Mathematics", "Science"],
       "courseName": "Calculus",
       "courseCode": "MATH101",
-      "branche": "Branche A",
-      "filiere": "Filiere 1",
+      "branch": "Branch A",
+      "major": "Major 1",
       "credits": 3,
-      "seat": 30,
-      "students_registered": 25,
+      "seatLimit": 30,
+      "studentsRegistered": 25,
       "bibliography": "Book 1",
-      "location": "Location 1"
+      "location": "Location 1",
+      "program": "This course covers advanced calculus topics..."
     },
     {
       "id": 2,
-      "manager_course": "Responsable B",
-      "teachers": ["Professeur B"],
-      "categories": ["Informatique"],
+      "courseManager": "Manager B",
+      "teachers": ["Teacher B"],
+      "categories": ["Computer Science"],
       "courseName": "Algorithms",
       "courseCode": "CS201",
-      "branche": "Branche B",
-      "filiere": "Filiere 2",
+      "branch": "Branch B",
+      "major": "Major 2",
       "credits": 4,
-      "seat": 40,
-      "students_registered": 35,
+      "seatLimit": 40,
+      "studentsRegistered": 35,
       "bibliography": "Book 2",
-      "location": "Location 2"
+      "location": "Location 2",
+      "program": "Introduction to algorithms and data structures..."
+    }
+  ],
+  "reviews": [
+    {
+      "id": 1,
+      "courseId": 1,
+      "theory": 4,
+      "practice": 5,
+      "subject": 4,
+      "personalAppreciation": 5,
+      "comment": "Great course, well explained."
+    },
+    {
+      "id": 2,
+      "courseId": 1,
+      "theory": 3,
+      "practice": 4,
+      "subject": 4,
+      "personalAppreciation": 3,
+      "comment": "Challenging but very rewarding."
+    },
+    {
+      "id": 3,
+      "courseId": 2,
+      "theory": 5,
+      "practice": 5,
+      "subject": 5,
+      "personalAppreciation": 5,
+      "comment": "Very informative and practical."
+    },
+    {
+      "id": 4,
+      "courseId": 2,
+      "theory": 4,
+      "practice": 3,
+      "subject": 4,
+      "personalAppreciation": 3,
+      "comment": "A bit tough but learned a lot."
     }
   ]
 }

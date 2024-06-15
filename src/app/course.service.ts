@@ -6,16 +6,21 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CourseService {
-  private apiUrl = 'http://localhost:3000/courses';
+  private apiUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient) { }
 
   getCourses(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+    return this.http.get<any[]>(`${this.apiUrl}/courses`);
   }
 
-  getCourseById(id: string): Observable<any> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.get<any>(url);
+  getCourseByCourseCode(courseCode: string): Observable<any[]> {
+    const url = `${this.apiUrl}/courses?courseCode=${courseCode}`;
+    return this.http.get<any[]>(url);
+  }
+
+  getReviewsByCourseId(courseId: number): Observable<any[]> {
+    const url = `${this.apiUrl}/reviews?courseId=${courseId}`;
+    return this.http.get<any[]>(url);
   }
 }

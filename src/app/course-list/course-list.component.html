@@ -52,9 +52,10 @@
   <div class="row mt-4">
     <div class="col">
       <div class="list-group">
-        <a *ngFor="let course of filteredCourses" class="list-group-item list-group-item-action">
-          {{ course.courseName }} - {{ course.courseCode }}
-        </a>
+        <div *ngFor="let course of filteredCourses" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+          <span>{{ course.courseName }} - {{ course.courseCode }}</span>
+          <a [routerLink]="['/course', course.courseCode]" class="btn btn-primary btn-sm">Information</a>
+        </div>
       </div>
     </div>
   </div>
