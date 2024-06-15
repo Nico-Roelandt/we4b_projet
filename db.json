@@ -4,13 +4,15 @@
       "id": 1,
       "username": "student1",
       "password": "password1",
-      "role": "student"
+      "role": "student",
+      "name": "Student One"
     },
     {
       "id": 2,
       "username": "teacher1",
       "password": "password1",
-      "role": "teacher"
+      "role": "teacher",
+      "name": "Teacher One"
     }
   ],
   "courses": [
@@ -51,6 +53,7 @@
     {
       "id": 1,
       "courseId": 1,
+      "studentId": 1,
       "theory": 4,
       "practice": 5,
       "subject": 4,
@@ -60,6 +63,7 @@
     {
       "id": 2,
       "courseId": 1,
+      "studentId": 1,
       "theory": 3,
       "practice": 4,
       "subject": 4,
@@ -69,6 +73,7 @@
     {
       "id": 3,
       "courseId": 2,
+      "studentId": 1,
       "theory": 5,
       "practice": 5,
       "subject": 5,
@@ -78,6 +83,7 @@
     {
       "id": 4,
       "courseId": 2,
+      "studentId": 1,
       "theory": 4,
       "practice": 3,
       "subject": 4,
