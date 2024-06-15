@@ -8,7 +8,7 @@ import { AuthGuard } from './auth.guard'; // Modifier le chemin
 
 const routes: Routes = [
   { path: 'courses', component: CourseListComponent },
-  { path: 'course/:courseCode', component: CourseDetailComponent },
+  { path: 'courses/:courseCode', component: CourseDetailComponent },
   { path: 'student-center', component: StudentCenterComponent, canActivate: [AuthGuard] },
   { path: 'teacher-center', component: TeacherCenterComponent, canActivate: [AuthGuard] },
 ];

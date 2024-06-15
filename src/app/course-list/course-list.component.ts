@@ -15,10 +15,10 @@ export class CourseListComponent implements OnInit {
   selectedMajor: string = 'All';
   selectedLocation: string = 'All';
 
-  categories: string[] = ['All', 'Mathématiques', 'Informatique', 'Science'];
-  branches: string[] = ['All', 'Sciences', 'Technologies', 'Lettres'];
-  majors: string[] = ['All', 'Mathématiques', 'Informatique', 'Physique'];
-  locations: string[] = ['All', 'Salle 101', 'Salle 202', 'Salle 303'];
+  categories: string[] = ['All', 'Mathematics', 'Computer Science', 'Science'];
+  branches: string[] = ['All', 'Sciences', 'Technologies', 'Humanities'];
+  majors: string[] = ['All', 'Mathematics', 'Computer Science', 'Physics'];
+  locations: string[] = ['All', 'Room 101', 'Room 202', 'Room 303'];
 
   constructor(private courseService: CourseService) { }
 
@@ -35,8 +35,7 @@ export class CourseListComponent implements OnInit {
              (this.selectedBranch === 'All' || course.branch === this.selectedBranch) &&
              (this.selectedMajor === 'All' || course.major === this.selectedMajor) &&
              (this.selectedLocation === 'All' || course.location === this.selectedLocation) &&
-             (course.courseName.toLowerCase().includes(this.searchText.toLowerCase()) || 
-              course.prof.toLowerCase().includes(this.searchText.toLowerCase()));
+             (course.courseName.toLowerCase().includes(this.searchText.toLowerCase()));
     });
   }
 }

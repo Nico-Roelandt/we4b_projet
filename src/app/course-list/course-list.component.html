@@ -51,12 +51,28 @@
 
   <div class="row mt-4">
     <div class="col">
-      <div class="list-group">
-        <div *ngFor="let course of filteredCourses" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-          <span>{{ course.courseName }} - {{ course.courseCode }}</span>
-          <a [routerLink]="['/course', course.courseCode]" class="btn btn-primary btn-sm">Information</a>
-        </div>
-      </div>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Nom du cours</th>
+            <th>Code du cours</th>
+            <th>Branche</th>
+            <th>Filière</th>
+            <th>Lieu</th>
+            <th>Information</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let course of filteredCourses">
+            <td>{{ course.courseName }}</td>
+            <td>{{ course.courseCode }}</td>
+            <td>{{ course.branch }}</td>
+            <td>{{ course.major }}</td>
+            <td>{{ course.location }}</td>
+            <td><button class="btn btn-info" [routerLink]="['/courses', course.courseCode]">Information</button></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

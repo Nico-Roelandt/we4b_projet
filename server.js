@@ -6,8 +6,7 @@ const port = 3000;
 app.use(cors());
 app.use(express.json());
 
-// Simulated database
-const courses = [
+let courses = [
     {
         id: 1,
         courseManager: "Manager A",
@@ -42,10 +41,10 @@ const courses = [
     }
 ];
 
-const reviews = [
+let reviews = [
     {
         id: 1,
-        courseId: 1,
+        courseCode: "MATH101",
         theory: 4,
         practice: 5,
         subject: 4,
@@ -54,7 +53,7 @@ const reviews = [
     },
     {
         id: 2,
-        courseId: 1,
+        courseCode: "MATH101",
         theory: 3,
         practice: 4,
         subject: 4,
@@ -63,7 +62,7 @@ const reviews = [
     },
     {
         id: 3,
-        courseId: 2,
+        courseCode: "CS201",
         theory: 5,
         practice: 5,
         subject: 5,
@@ -72,7 +71,7 @@ const reviews = [
     },
     {
         id: 4,
-        courseId: 2,
+        courseCode: "CS201",
         theory: 4,
         practice: 3,
         subject: 4,
@@ -97,9 +96,13 @@ app.get('/courses/:courseCode', (req, res) => {
 });
 
 app.get('/reviews', (req, res) => {
-    const courseId = parseInt(req.query.courseId, 10);
-    const courseReviews = reviews.filter(r => r.courseId === courseId);
-    res.json(courseReviews);
+    const courseCode = req.query.courseCode;
+    if(courseCode) {
+        const courseReviews = reviews.filter(r => r.courseCode === courseCode);
+        res.json(courseReviews);
+    } else {
+        res.status(404).send('Course not found reviews');
+    }
 });
 
 app.listen(port, () => {

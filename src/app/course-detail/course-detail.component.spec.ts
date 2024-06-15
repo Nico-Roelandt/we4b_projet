@@ -18,15 +18,6 @@ export class CourseDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const courseId = this.route.snapshot.paramMap.get('id');
-    if (courseId) {
-      this.courseService.getCourseByCourseCode(courseId).subscribe(course => {
-        this.course = course;
-        this.course.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.course.videoUrl);
-      });
-    } else {
-      // Gérer le cas où courseId est null
-      console.error('courseId is null');
-    }
+
   }
 }

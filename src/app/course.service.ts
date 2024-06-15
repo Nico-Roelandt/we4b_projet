@@ -19,8 +19,9 @@ export class CourseService {
     return this.http.get<any>(url);
   }
 
-  getReviewsByCourseId(courseId: number): Observable<any[]> {
-    const url = `${this.apiUrl}/reviews?courseId=${courseId}`;
+  getReviewsByCourseCode(courseCode: string): Observable<any[]> {
+    const url = `${this.apiUrl}/reviews?courseCode=${courseCode}`;
     return this.http.get<any[]>(url);
   }
+
 }

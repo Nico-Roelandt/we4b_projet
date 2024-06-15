@@ -22,7 +22,7 @@ export class AuthService {
           if (users.length > 0) {
             this.isAuthenticated = true;
             this.role = role;
-            this.username = username; // Stocker le nom d'utilisateur
+            this.username = username;
             this.userId = users[0].id;
             return true;
           }

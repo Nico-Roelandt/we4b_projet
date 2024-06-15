@@ -19,22 +19,14 @@ export class CourseDetailComponent implements OnInit {
   ngOnInit(): void {
     const courseCode = this.route.snapshot.paramMap.get('courseCode');
     if (courseCode) {
-      this.courseService.getCourseByCourseCode(courseCode).subscribe(courses => {
-        if (courses.length > 0) {
-          this.course = courses[0];
-          this.loadReviews(this.course.id);
-        } else {
-          console.error('Course not found');
-        }
+      this.courseService.getCourseByCourseCode(courseCode).subscribe(course => {
+        this.course = course;
+      });
+      this.courseService.getReviewsByCourseCode(courseCode).subscribe(reviews => {
+        this.reviews = reviews;
       });
     } else {
       console.error('courseCode is null');
     }
-  }
-
-  loadReviews(courseId: number): void {
-    this.courseService.getReviewsByCourseId(courseId).subscribe(reviews => {
-      this.reviews = reviews;
-    });
   }
 }
