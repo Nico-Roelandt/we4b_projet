@@ -13,7 +13,7 @@ export class CourseDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private courseService: CourseService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const courseCode = this.route.snapshot.paramMap.get('courseCode');

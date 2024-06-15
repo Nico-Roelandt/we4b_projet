@@ -1,49 +1,60 @@
-<div class="container-fluid">
-  <div class="row">
+<div class="container mt-5">
+  <div class="row mb-4">
+    <div class="col">
+      <h1>Liste des Cours</h1>
+    </div>
+  </div>
+
+  <div class="row mb-3">
     <div class="col-md-3">
-      <h4>Filtres</h4>
       <div class="mb-3">
         <label for="categoryFilter" class="form-label">Catégorie</label>
         <select id="categoryFilter" class="form-select" [(ngModel)]="selectedCategory" (change)="filterCourses()">
           <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
         </select>
       </div>
+    </div>
+
+    <div class="col-md-3">
       <div class="mb-3">
         <label for="branchFilter" class="form-label">Branche</label>
         <select id="branchFilter" class="form-select" [(ngModel)]="selectedBranch" (change)="filterCourses()">
           <option *ngFor="let branch of branches" [value]="branch">{{ branch }}</option>
         </select>
       </div>
+    </div>
+
+    <div class="col-md-3">
       <div class="mb-3">
         <label for="majorFilter" class="form-label">Filière</label>
         <select id="majorFilter" class="form-select" [(ngModel)]="selectedMajor" (change)="filterCourses()">
           <option *ngFor="let major of majors" [value]="major">{{ major }}</option>
         </select>
       </div>
+    </div>
+
+    <div class="col-md-3">
       <div class="mb-3">
-        <label for="locationFilter" class="form-label">Localisation</label>
+        <label for="locationFilter" class="form-label">Lieu</label>
         <select id="locationFilter" class="form-select" [(ngModel)]="selectedLocation" (change)="filterCourses()">
           <option *ngFor="let location of locations" [value]="location">{{ location }}</option>
         </select>
       </div>
-      <div class="mb-3">
-        <label for="searchText" class="form-label">Recherche</label>
-        <input type="text" id="searchText" class="form-control" [(ngModel)]="searchText" (input)="filterCourses()">
-      </div>
     </div>
-    <div class="col-md-9">
-      <h4>Liste des cours</h4>
-      <div class="course-list">
-        <div *ngFor="let course of filteredCourses" class="card mb-3">
-          <div class="card-body">
-            <h5 class="card-title">
-              <a [routerLink]="['/course', course.courseCode]">{{ course.courseName }}</a>
-            </h5>
-            <p class="card-text"><strong>Professeur(s):</strong> {{ course.teachers.join(', ') }}</p>
-            <p class="card-text"><strong>Catégories:</strong> {{ course.categories.join(', ') }}</p>
-            <p class="card-text"><strong>Localisation:</strong> {{ course.location }}</p>
-          </div>
-        </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <input type="text" class="form-control" placeholder="Recherche" [(ngModel)]="searchText" (input)="filterCourses()">
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col">
+      <div class="list-group">
+        <a *ngFor="let course of filteredCourses" class="list-group-item list-group-item-action">
+          {{ course.courseName }} - {{ course.courseCode }}
+        </a>
       </div>
     </div>
   </div>

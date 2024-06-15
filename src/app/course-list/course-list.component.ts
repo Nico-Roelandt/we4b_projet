@@ -15,10 +15,10 @@ export class CourseListComponent implements OnInit {
   selectedMajor: string = 'All';
   selectedLocation: string = 'All';
 
-  categories: string[] = ['All', 'Théorique', 'Pratique', 'Langues', 'Humanités'];
-  branches: string[] = ['All', 'Informatique', 'Mécanique', 'Electrique', 'Design', 'Systéme industriel'];
-  majors: string[] = ['All', 'Informatique : Monde virtuel', 'Informatique : IA'];
-  locations: string[] = ['All', 'Sevenans', 'Belfort', 'Montbéliard'];
+  categories: string[] = ['All', 'Mathématiques', 'Informatique', 'Science'];
+  branches: string[] = ['All', 'Sciences', 'Technologies', 'Lettres'];
+  majors: string[] = ['All', 'Mathématiques', 'Informatique', 'Physique'];
+  locations: string[] = ['All', 'Salle 101', 'Salle 202', 'Salle 303'];
 
   constructor(private courseService: CourseService) { }
 
@@ -32,11 +32,11 @@ export class CourseListComponent implements OnInit {
   filterCourses() {
     this.filteredCourses = this.courses.filter(course => {
       return (this.selectedCategory === 'All' || course.categories.includes(this.selectedCategory)) &&
-             (this.selectedBranch === 'All' || course.branche === this.selectedBranch) &&
-             (this.selectedMajor === 'All' || course.filiere === this.selectedMajor) &&
+             (this.selectedBranch === 'All' || course.branch === this.selectedBranch) &&
+             (this.selectedMajor === 'All' || course.major === this.selectedMajor) &&
              (this.selectedLocation === 'All' || course.location === this.selectedLocation) &&
              (course.courseName.toLowerCase().includes(this.searchText.toLowerCase()) || 
-              course.teachers.some((teacher: string) => teacher.toLowerCase().includes(this.searchText.toLowerCase())));
+              course.prof.toLowerCase().includes(this.searchText.toLowerCase()));
     });
   }
 }

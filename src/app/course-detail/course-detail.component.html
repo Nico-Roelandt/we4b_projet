@@ -1,14 +1,142 @@
-<div *ngIf="course">
-  <h2>{{ course.courseName }}</h2>
-  <p><strong>Code:</strong> {{ course.courseCode }}</p>
-  <p><strong>Professeur(s):</strong> {{ course.teachers.join(', ') }}</p>
-  <p><strong>Responsable:</strong> {{ course.manager_course }}</p>
-  <p><strong>Crédits:</strong> {{ course.credits }}</p>
-  <p><strong>Sièges:</strong> {{ course.seat }}</p>
-  <p><strong>Inscrits:</strong> {{ course.students_registered }}</p>
-  <p><strong>Bibliographie:</strong> {{ course.bibliography }}</p>
-  <p><strong>Catégories:</strong> {{ course.categories.join(', ') }}</p>
-  <p><strong>Branche:</strong> {{ course.branche }}</p>
-  <p><strong>Filière:</strong> {{ course.filiere }}</p>
-  <p><strong>Localisation:</strong> {{ course.location }}</p>
+<div class="container mt-5">
+  <div class="row mb-4">
+    <div class="col">
+      <h1>Détails du Cours</h1>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Nom du Cours</h5>
+          <p class="card-text">{{ course?.courseName }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Code du Cours</h5>
+          <p class="card-text">{{ course?.courseCode }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Nombre de Crédits</h5>
+          <p class="card-text">{{ course?.credits }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Professeur</h5>
+          <p class="card-text">{{ course?.prof }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Catégories</h5>
+          <p class="card-text">
+            <span *ngFor="let category of course?.categories" class="badge bg-secondary me-2">{{ category }}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Branche</h5>
+          <p class="card-text">{{ course?.branch }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Filière</h5>
+          <p class="card-text">{{ course?.major }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Limite de Places</h5>
+          <p class="card-text">{{ course?.seatLimit }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Lieu</h5>
+          <p class="card-text">{{ course?.location }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Programme du Cours</h5>
+          <p class="card-text">{{ course?.program }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Bibliographie</h5>
+          <p class="card-text">{{ course?.bibliography }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Liste des Professeurs</h5>
+          <ul>
+            <li *ngFor="let professor of course?.professors">{{ professor }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Enquête de Fin de Semestre</h5>
+          <p class="card-text">Lien vers l'enquête de fin de semestre : <a [href]="course?.surveyLink" target="_blank">{{ course?.surveyLink }}</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
