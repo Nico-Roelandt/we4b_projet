@@ -7,7 +7,7 @@ import { map, catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/users';
+  private apiUrl = 'http://localhost:3000';
   private isAuthenticated: boolean = false;
   private role: string = '';
   private username: string = '';
@@ -16,14 +16,14 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   login(username: string, password: string, role: string): Observable<boolean> {
-    return this.http.get<any[]>(`${this.apiUrl}?username=${username}&password=${password}&role=${role}`)
+    return this.http.post<any>(`${this.apiUrl}/login`, { username, password, role })
       .pipe(
-        map(users => {
-          if (users.length > 0) {
+        map(user => {
+          if (user) {
             this.isAuthenticated = true;
             this.role = role;
             this.username = username;
-            this.userId = users[0].id;
+            this.userId = user.id;
             return true;
           }
           return false;
@@ -36,6 +36,7 @@ export class AuthService {
     this.isAuthenticated = false;
     this.role = '';
     this.username = '';
+    this.userId = 0;
   }
 
   getRole(): string {
@@ -57,5 +58,4 @@ export class AuthService {
   getTeacherId(): number {
     return this.userId;
   }
-
 }

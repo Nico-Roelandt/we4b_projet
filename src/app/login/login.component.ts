@@ -21,6 +21,8 @@ export class LoginComponent {
     this.authService.login(this.username, this.password, this.role).subscribe(success => {
       if (success) {
         this.loginSuccess.emit('Connexion réussie');
+        // Redirection après connexion réussie
+        this.router.navigate(['/courses']);
       } else {
         this.loginError.emit('Échec de la connexion');
       }

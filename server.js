@@ -34,6 +34,21 @@ let majors = [
   { id: 3, name: "Major 3" }
 ];
 
+let users = [
+  {
+    id: 1,
+    username: "student1",
+    password: "password1",
+    role: "student"
+  },
+  {
+    id: 2,
+    username: "teacher1",
+    password: "password1",
+    role: "teacher"
+  }
+];
+
 let courses = [
   {
     id: 1,
@@ -75,43 +90,53 @@ let reviews = [
 
 // Routes
 app.get('/courses', (req, res) => {
-    res.json(courses);
+  res.json(courses);
 });
 
 app.get('/courses/:courseCode', (req, res) => {
-    const courseCode = req.params.courseCode;
-    const course = courses.find(c => c.courseCode === courseCode);
-    if (course) {
-        res.json(course);
-    } else {
-        res.status(404).send('Course not found');
-    }
+  const courseCode = req.params.courseCode;
+  const course = courses.find(c => c.courseCode === courseCode);
+  if (course) {
+    res.json(course);
+  } else {
+    res.status(404).send('Course not found');
+  }
 });
 
 app.get('/reviews', (req, res) => {
-    const courseCode = req.query.courseCode;
-    const courseReviews = reviews.filter(r => r.courseCode === courseCode);
-    res.json(courseReviews);
+  const courseCode = req.query.courseCode;
+  const courseReviews = reviews.filter(r => r.courseCode === courseCode);
+  res.json(courseReviews);
 });
 
 // Routes to get categories, locations, branches, and majors
 app.get('/categories', (req, res) => {
-    res.json(categories);
+  res.json(categories);
 });
 
 app.get('/locations', (req, res) => {
-    res.json(locations);
+  res.json(locations);
 });
 
 app.get('/branches', (req, res) => {
-    res.json(branches);
+  res.json(branches);
 });
 
 app.get('/majors', (req, res) => {
-    res.json(majors);
+  res.json(majors);
 });
 
+// Route for user login
+app.post('/login', (req, res) => {
+  const { username, password, role } = req.body;
+  const user = users.find(u => u.username === username && u.password === password && u.role === role);
+  if (user) {
+    res.json(user);
+  } else {
+    res.status(401).send('Invalid credentials');
+  }
+});
 
 app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
+  console.log(`Server is running on http://localhost:${port}`);
 });
