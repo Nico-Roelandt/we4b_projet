@@ -6,6 +6,17 @@ const port = 3000;
 app.use(cors());
 app.use(express.json());
 
+const dbFilePath = './db.json';
+
+function readDatabase() {
+    const data = fs.readFileSync(dbFilePath);
+    return JSON.parse(data);
+}
+
+function writeDatabase(data) {
+    fs.writeFileSync(dbFilePath, JSON.stringify(data, null, 2));
+}
+
 let categories = [
   { id: 1, name: "Mathematics" },
   { id: 2, name: "Computer Science" },
@@ -90,11 +101,13 @@ let reviews = [
 
 // Routes
 app.get('/courses', (req, res) => {
+  const db = readDatabase();
   res.json(courses);
 });
 
 app.get('/courses/:courseCode', (req, res) => {
   const courseCode = req.params.courseCode;
+  const db = readDatabase();
   const course = courses.find(c => c.courseCode === courseCode);
   if (course) {
     res.json(course);
@@ -139,4 +152,14 @@ app.post('/login', (req, res) => {
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
+});
+
+// Route to add a new course
+app.post('/courses', (req, res) => {
+  const newCourse = req.body;
+  const db = readDatabase();
+  newCourse.id = courses.length + 1; // Assign a new ID
+  db.courses.push(newCourse);
+  writeDatabase(db);
+  res.status(201).json(newCourse);
 });

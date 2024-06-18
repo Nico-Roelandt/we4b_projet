@@ -1,33 +1,71 @@
 <div class="teacher-center">
-    <h1>Centre Enseignant</h1>
-  
-    <h2>Créer un cours</h2>
-    <form (submit)="createCourse(course)">
-      <!-- Formulaire de création de cours -->
-      <div>
-        <label for="courseName">Nom du cours:</label>
-        <input id="courseName" [(ngModel)]="course.name" name="name">
-      </div>
-      <div>
-        <label for="courseDescription">Description:</label>
-        <input id="courseDescription" [(ngModel)]="course.description" name="description">
-      </div>
-      <button type="submit">Créer</button>
-    </form>
-  
-    <h2>Mes cours</h2>
-    <ul>
-      <li *ngFor="let course of courses">
-        {{ course.name }}
-        <button (click)="closeCourse(course.id)">Fermer</button>
-      </li>
-    </ul>
-  
-    <h2>Page personnelle</h2>
-    <p><strong>Email:</strong> {{ personalInfo.email }}</p>
-    <p><strong>Cours enseignés:</strong></p>
-    <ul>
-      <li *ngFor="let course of personalInfo.taughtCourses">{{ course }}</li>
-    </ul>
-  </div>
-  
+  <h1>Centre Enseignant</h1>
+
+  <h2>Créer un cours</h2>
+  <form (ngSubmit)="createCourse()">
+    <div>
+      <label for="courseName">Nom du cours:</label>
+      <input id="courseName" [(ngModel)]="course.courseName" name="courseName" required>
+    </div>
+    <div>
+      <label for="courseCode">Code du cours:</label>
+      <input id="courseCode" [(ngModel)]="course.courseCode" name="courseCode" required>
+    </div>
+    <div>
+      <label for="courseManager">Responsable du cours:</label>
+      <input id="courseManager" [(ngModel)]="course.courseManager" name="courseManager" required>
+    </div>
+    <div>
+      <label for="teachers">Professeurs (séparés par des virgules):</label>
+      <input id="teachers" [(ngModel)]="course.teachers" name="teachers" required>
+    </div>
+    <div>
+      <label for="categories">Catégories (IDs séparés par des virgules):</label>
+      <input id="categories" [(ngModel)]="course.categories" name="categories" required>
+    </div>
+    <div>
+      <label for="branch">Branche:</label>
+      <input id="branch" [(ngModel)]="course.branch" name="branch" required>
+    </div>
+    <div>
+      <label for="major">Filière:</label>
+      <input id="major" [(ngModel)]="course.major" name="major" required>
+    </div>
+    <div>
+      <label for="credits">Crédits:</label>
+      <input id="credits" type="number" [(ngModel)]="course.credits" name="credits" required>
+    </div>
+    <div>
+      <label for="seatLimit">Limite de sièges:</label>
+      <input id="seatLimit" type="number" [(ngModel)]="course.seatLimit" name="seatLimit" required>
+    </div>
+    <div>
+      <label for="bibliography">Bibliographie:</label>
+      <input id="bibliography" [(ngModel)]="course.bibliography" name="bibliography" required>
+    </div>
+    <div>
+      <label for="location">Lieu:</label>
+      <input id="location" [(ngModel)]="course.location" name="location" required>
+    </div>
+    <div>
+      <label for="program">Programme:</label>
+      <textarea id="program" [(ngModel)]="course.program" name="program" required></textarea>
+    </div>
+    <button type="submit">Créer</button>
+  </form>
+
+  <h2>Mes cours</h2>
+  <ul>
+    <li *ngFor="let course of courses">
+      {{ course.courseName }}
+      <button (click)="closeCourse(course.id)">Fermer</button>
+    </li>
+  </ul>
+
+  <h2>Page personnelle</h2>
+  <p><strong>Email:</strong> {{ personalInfo.email }}</p>
+  <p><strong>Cours enseignés:</strong></p>
+  <ul>
+    <li *ngFor="let course of personalInfo.taughtCourses">{{ course }}</li>
+  </ul>
+</div>
