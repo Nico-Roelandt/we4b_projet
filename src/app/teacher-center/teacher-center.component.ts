@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { TeacherService } from '../teacher.service';
 import { AuthService } from '../auth.service';
 
@@ -15,18 +16,18 @@ export class TeacherCenterComponent implements OnInit {
     categories: '',
     courseName: '',
     courseCode: '',
-    branch: 0,
-    major: 0,
+    branch: '',
+    major: '',
     credits: 0,
     seatLimit: 0,
     studentsRegistered: 0,
     bibliography: '',
-    location: 0,
+    location: '',
     program: ''
   };
   personalInfo: any = {};
 
-  constructor(private teacherService: TeacherService, private authService: AuthService) { }
+  constructor(private teacherService: TeacherService, private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadTeacherData();
@@ -43,7 +44,11 @@ export class TeacherCenterComponent implements OnInit {
   }
 
   createCourse() {
-    const courseToCreate = { ...this.course, teachers: this.course.teachers.split(','), categories: this.course.categories.split(',').map(Number) };
+    const courseToCreate = { 
+      ...this.course, 
+      teachers: this.course.teachers.split(','), 
+      categories: this.course.categories.split(',').map(Number) 
+    };
     this.teacherService.createCourse(courseToCreate).subscribe(response => {
       this.course = {
         courseManager: '',
@@ -51,17 +56,21 @@ export class TeacherCenterComponent implements OnInit {
         categories: '',
         courseName: '',
         courseCode: '',
-        branch: 0,
-        major: 0,
+        branch: '',
+        major: '',
         credits: 0,
         seatLimit: 0,
         studentsRegistered: 0,
         bibliography: '',
-        location: 0,
+        location: '',
         program: ''
       };
       this.loadTeacherData();
     });
+  }
+
+  editCourse(courseId: number) {
+    this.router.navigate(['/edit-course', courseId]);
   }
 
   closeCourse(courseId: number) {

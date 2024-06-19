@@ -19,8 +19,13 @@
     {
       "id": 1,
       "courseManager": "Manager A",
-      "teachers": ["Teacher A"],
-      "categories": ["Mathematics", "Science"],
+      "teachers": [
+        "Teacher A"
+      ],
+      "categories": [
+        "Mathematics",
+        "Science"
+      ],
       "courseName": "Calculus",
       "courseCode": "MATH101",
       "branch": "Branch A",
@@ -35,8 +40,12 @@
     {
       "id": 2,
       "courseManager": "Manager B",
-      "teachers": ["Teacher B"],
-      "categories": ["Computer Science"],
+      "teachers": [
+        "Teacher B"
+      ],
+      "categories": [
+        "Computer Science"
+      ],
       "courseName": "Algorithms",
       "courseCode": "CS201",
       "branch": "Branch B",
@@ -47,6 +56,26 @@
       "bibliography": "Book 2",
       "location": "Location 2",
       "program": "Introduction to algorithms and data structures..."
+    },
+    {
+      "id": 3,
+      "courseManager": "manager1",
+      "teachers": [
+        "teacher1"
+      ],
+      "categories": [
+        "Computer Science"
+      ],
+      "courseName": "AP4A",
+      "courseCode": "AP4B",
+      "branch": "Branch A",
+      "major": "Major 2",
+      "credits": 4,
+      "seatLimit": 40,
+      "studentsRegistered": 20,
+      "bibliography": "BOOK 3",
+      "location": "I102",
+      "program": "INtroduction"
     }
   ],
   "reviews": [

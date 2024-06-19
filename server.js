@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const fs = require('fs');
 const app = express();
 const port = 3000;
 
@@ -9,106 +10,42 @@ app.use(express.json());
 const dbFilePath = './db.json';
 
 function readDatabase() {
+  if (fs.existsSync(dbFilePath)) {
     const data = fs.readFileSync(dbFilePath);
     return JSON.parse(data);
+  } else {
+    return {
+      categories: [],
+      locations: [],
+      branches: [],
+      majors: [],
+      users: [],
+      courses: [],
+      reviews: []
+    };
+  }
 }
 
 function writeDatabase(data) {
-    fs.writeFileSync(dbFilePath, JSON.stringify(data, null, 2));
+  fs.writeFileSync(dbFilePath, JSON.stringify(data, null, 2));
 }
 
-let categories = [
-  { id: 1, name: "Mathematics" },
-  { id: 2, name: "Computer Science" },
-  { id: 3, name: "Science" }
-];
-
-let locations = [
-  { id: 1, name: "Location 1" },
-  { id: 2, name: "Location 2" },
-  { id: 3, name: "Room 101" },
-  { id: 4, name: "Room 202" },
-  { id: 5, name: "Room 303" }
-];
-
-let branches = [
-  { id: 1, name: "Branch A" },
-  { id: 2, name: "Branch B" },
-  { id: 3, name: "Sciences" },
-  { id: 4, name: "Technologies" },
-  { id: 5, name: "Humanities" }
-];
-
-let majors = [
-  { id: 1, name: "Major 1" },
-  { id: 2, name: "Major 2" },
-  { id: 3, name: "Major 3" }
-];
-
-let users = [
-  {
-    id: 1,
-    username: "student1",
-    password: "password1",
-    role: "student"
-  },
-  {
-    id: 2,
-    username: "teacher1",
-    password: "password1",
-    role: "teacher"
-  }
-];
-
-let courses = [
-  {
-    id: 1,
-    courseManager: "Manager A",
-    teachers: ["Teacher A"],
-    categories: [1, 3], // Referencing category IDs
-    courseName: "Calculus",
-    courseCode: "MATH101",
-    branch: 1, // Referencing branch ID
-    major: 1, // Referencing major ID
-    credits: 3,
-    seatLimit: 30,
-    studentsRegistered: 25,
-    bibliography: "Book 1",
-    location: 1, // Referencing location ID
-    program: "This course covers advanced calculus topics..."
-  },
-  {
-    id: 2,
-    courseManager: "Manager B",
-    teachers: ["Teacher B"],
-    categories: [2], // Referencing category IDs
-    courseName: "Algorithms",
-    courseCode: "CS201",
-    branch: 2, // Referencing branch ID
-    major: 2, // Referencing major ID
-    credits: 4,
-    seatLimit: 40,
-    studentsRegistered: 35,
-    bibliography: "Book 2",
-    location: 2, // Referencing location ID
-    program: "Introduction to algorithms and data structures..."
-  }
-];
-
-let reviews = [
-  // Your reviews here
-];
+function generateNewId(courses) {
+  if (courses.length === 0) return 1;
+  const ids = courses.map(course => course.id);
+  return Math.max(...ids) + 1;
+}
 
 // Routes
 app.get('/courses', (req, res) => {
   const db = readDatabase();
-  res.json(courses);
+  res.json(db.courses);
 });
 
 app.get('/courses/:courseCode', (req, res) => {
-  const courseCode = req.params.courseCode;
   const db = readDatabase();
-  const course = courses.find(c => c.courseCode === courseCode);
+  const courseCode = req.params.courseCode;
+  const course = db.courses.find(c => c.courseCode === courseCode);
   if (course) {
     res.json(course);
   } else {
@@ -117,32 +54,36 @@ app.get('/courses/:courseCode', (req, res) => {
 });
 
 app.get('/reviews', (req, res) => {
+  const db = readDatabase();
   const courseCode = req.query.courseCode;
-  const courseReviews = reviews.filter(r => r.courseCode === courseCode);
+  const courseReviews = db.reviews.filter(r => r.courseCode === courseCode);
   res.json(courseReviews);
 });
 
-// Routes to get categories, locations, branches, and majors
 app.get('/categories', (req, res) => {
-  res.json(categories);
+  const db = readDatabase();
+  res.json(db.categories);
 });
 
 app.get('/locations', (req, res) => {
-  res.json(locations);
+  const db = readDatabase();
+  res.json(db.locations);
 });
 
 app.get('/branches', (req, res) => {
-  res.json(branches);
+  const db = readDatabase();
+  res.json(db.branches);
 });
 
 app.get('/majors', (req, res) => {
-  res.json(majors);
+  const db = readDatabase();
+  res.json(db.majors);
 });
 
-// Route for user login
 app.post('/login', (req, res) => {
+  const db = readDatabase();
   const { username, password, role } = req.body;
-  const user = users.find(u => u.username === username && u.password === password && u.role === role);
+  const user = db.users.find(u => u.username === username && u.password === password && u.role === role);
   if (user) {
     res.json(user);
   } else {
@@ -150,16 +91,69 @@ app.post('/login', (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
-
-// Route to add a new course
 app.post('/courses', (req, res) => {
-  const newCourse = req.body;
   const db = readDatabase();
-  newCourse.id = courses.length + 1; // Assign a new ID
+  const newCourse = req.body;
+  newCourse.id = generateNewId(db.courses); // Assign a new ID
+  // Ensure new course format consistency
+  newCourse.teachers = Array.isArray(newCourse.teachers) ? newCourse.teachers : newCourse.teachers.split(',');
+  newCourse.categories = Array.isArray(newCourse.categories) ? newCourse.categories : newCourse.categories.split(',').map(String);
+  newCourse.branch = String(newCourse.branch);
+  newCourse.major = String(newCourse.major);
+  newCourse.location = String(newCourse.location);
   db.courses.push(newCourse);
   writeDatabase(db);
   res.status(201).json(newCourse);
+});
+
+app.put('/courses/:id', (req, res) => {
+  const db = readDatabase();
+  const courseId = parseInt(req.params.id);
+  const updatedCourse = req.body;
+  const courseIndex = db.courses.findIndex(c => c.id === courseId);
+  if (courseIndex > -1) {
+    // Ensure updated course format consistency
+    updatedCourse.teachers = Array.isArray(updatedCourse.teachers) ? updatedCourse.teachers : updatedCourse.teachers.split(',');
+    updatedCourse.categories = Array.isArray(updatedCourse.categories) ? updatedCourse.categories : updatedCourse.categories.split(',').map(String);
+    updatedCourse.branch = String(updatedCourse.branch);
+    updatedCourse.major = String(updatedCourse.major);
+    updatedCourse.location = String(updatedCourse.location);
+    db.courses[courseIndex] = { ...db.courses[courseIndex], ...updatedCourse };
+    writeDatabase(db);
+    res.json(db.courses[courseIndex]);
+  } else {
+    res.status(404).send('Course not found');
+  }
+});
+
+
+app.delete('/courses/:id', (req, res) => {
+  const db = readDatabase();
+  const courseId = parseInt(req.params.id);
+  const courseIndex = db.courses.findIndex(c => c.id === courseId);
+  if (courseIndex > -1) {
+    db.courses.splice(courseIndex, 1);
+    writeDatabase(db);
+    res.status(204).send();
+  } else {
+    res.status(404).send('Course not found');
+  }
+});
+
+app.get('/teachers/:teacherId/courses', (req, res) => {
+  const db = readDatabase();
+  const teacherId = parseInt(req.params.teacherId);
+  const teacher = db.users.find(user => user.id === teacherId && user.role === 'teacher');
+  
+  if (!teacher) {
+    return res.status(404).send('Teacher not found');
+  }
+
+  const teacherName = teacher.username;
+  const courses = db.courses.filter(course => course.teachers.includes(teacherName));
+  res.json({ courses });
+});
+
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
 });

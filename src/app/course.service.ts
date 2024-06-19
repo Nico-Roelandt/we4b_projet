@@ -15,13 +15,11 @@ export class CourseService {
   }
 
   getCourseByCourseCode(courseCode: string): Observable<any> {
-    const url = `${this.apiUrl}/courses/${courseCode}`;
-    return this.http.get<any>(url);
+    return this.http.get<any>(`${this.apiUrl}/courses/${courseCode}`);
   }
 
   getReviewsByCourseCode(courseCode: string): Observable<any[]> {
-    const url = `${this.apiUrl}/reviews?courseCode=${courseCode}`;
-    return this.http.get<any[]>(url);
+    return this.http.get<any[]>(`${this.apiUrl}/reviews?courseCode=${courseCode}`);
   }
 
   getCategories(): Observable<any[]> {
@@ -44,13 +42,11 @@ export class CourseService {
     return this.http.post<any>(`${this.apiUrl}/courses`, course);
   }
 
-  updateCourse(courseCode: string, course: any): Observable<any> {
-    const url = `${this.apiUrl}/courses/${courseCode}`;
-    return this.http.put<any>(url, course);
+  updateCourse(courseId: number, course: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/courses/${courseId}`, course);
   }
 
-  deleteCourse(courseCode: string): Observable<any> {
-    const url = `${this.apiUrl}/courses/${courseCode}`;
-    return this.http.delete<any>(url);
+  deleteCourse(courseId: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/courses/${courseId}`);
   }
 }

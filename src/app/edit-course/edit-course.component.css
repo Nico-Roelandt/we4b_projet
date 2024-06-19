@@ -1,0 +1,13 @@
+.container {
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  
+  .card {
+    margin-bottom: 20px;
+  }
+  
+  .d-flex {
+    margin-top: 20px;
+  }
+  

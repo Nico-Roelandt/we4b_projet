@@ -25,4 +25,17 @@ export class TeacherService {
   closeCourse(courseId: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/courses/${courseId}`);
   }
+
+  updateCourse(courseId: number, course: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/courses/${courseId}`, course);
+  }
+
+  deleteCourse(courseId: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/courses/${courseId}`);
+  }
+
+  getCourseById(courseId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/courses/${courseId}`);
+  }
+
 }
