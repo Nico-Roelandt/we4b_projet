@@ -65,7 +65,7 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Branch</h5>
-            <p class="card-text">{{ course.branch }}</p>
+            <p class="card-text">{{ course.branchName }}</p>
           </div>
         </div>
       </div>
@@ -73,7 +73,7 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Major</h5>
-            <p class="card-text">{{ course.major }}</p>
+            <p class="card-text">{{ course.majorName }}</p>
           </div>
         </div>
       </div>
@@ -92,7 +92,7 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Location</h5>
-            <p class="card-text">{{ course.location }}</p>
+            <p class="card-text">{{ course.locationName }}</p>
           </div>
         </div>
       </div>
@@ -138,18 +138,62 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Reviews</h5>
-            <ul>
-              <li *ngFor="let review of reviews">
-                <p>Theory: {{ review.theory }}/5</p>
-                <p>Practice: {{ review.practice }}/5</p>
-                <p>Subject: {{ review.subject }}/5</p>
-                <p>Personal Appreciation: {{ review.personalAppreciation }}/5</p>
-                <p>Comment: {{ review.comment }}</p>
-              </li>
-            </ul>
+            <div *ngFor="let review of reviews" class="mb-4">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <h5><strong>{{ review.author_name }}</strong></h5>
+                  <p>{{ review.comment }}</p>
+                  <div class="d-flex justify-content-around">
+                    <div class="w-25 me-2">
+                      <p>Theory:</p>
+                      <div class="progress mb-2">
+                        <div class="progress-bar bg-success" role="progressbar" [style.width.%]="review.theory * 20" aria-valuenow="review.theory" aria-valuemin="0" aria-valuemax="5">{{ review.theory }}/5</div>
+                      </div>
+                    </div>
+                    <div class="w-25 me-2">
+                      <p>Practice:</p>
+                      <div class="progress mb-2">
+                        <div class="progress-bar bg-info" role="progressbar" [style.width.%]="review.practice * 20" aria-valuenow="review.practice" aria-valuemin="0" aria-valuemax="5">{{ review.practice }}/5</div>
+                      </div>
+                    </div>
+                    <div class="w-25 me-2">
+                      <p>Subject:</p>
+                      <div class="progress mb-2">
+                        <div class="progress-bar bg-warning" role="progressbar" [style.width.%]="review.subject * 20" aria-valuenow="review.subject" aria-valuemin="0" aria-valuemax="5">{{ review.subject }}/5</div>
+                      </div>
+                    </div>
+                    <div class="w-25">
+                      <p>Personal Appreciation:</p>
+                      <div class="progress mb-2">
+                        <div class="progress-bar bg-danger" role="progressbar" [style.width.%]="review.personalAppreciation * 20" aria-valuenow="review.personalAppreciation" aria-valuemin="0" aria-valuemax="5">{{ review.personalAppreciation }}/5</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+    </div>
+    
+
+    <div class="row mb-3">
+      <div class="col-md-12">
+        <button class="btn btn-success" (click)="registerForCourse()">Register for this Course</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toasts -->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+  <div class="toast align-items-center text-white bg-danger border-0" id="courseToast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        <!-- Message content will be inserted dynamically -->
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Fermer"></button>
     </div>
   </div>
 </div>

@@ -9,6 +9,9 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./course-detail.component.css']
 })
 export class CourseDetailComponent implements OnInit {
+registerForCourse() {
+throw new Error('Method not implemented.');
+}
   course: any;
 
   constructor(

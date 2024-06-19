@@ -1,165 +1,229 @@
 const express = require('express');
 const cors = require('cors');
+const mysql = require('mysql2');
 const app = express();
 const port = 3000;
 
 app.use(cors());
 app.use(express.json());
 
-const dbFilePath = './db.json';
+// Configurez votre connexion MySQL
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root', // Remplacez par votre nom d'utilisateur MySQL
+  password: '', // Remplacez par votre mot de passe MySQL
+  database: 'we4b_database'
+});
 
-function readDatabase() {
-    const data = fs.readFileSync(dbFilePath);
-    return JSON.parse(data);
-}
-
-function writeDatabase(data) {
-    fs.writeFileSync(dbFilePath, JSON.stringify(data, null, 2));
-}
-
-let categories = [
-  { id: 1, name: "Mathematics" },
-  { id: 2, name: "Computer Science" },
-  { id: 3, name: "Science" }
-];
-
-let locations = [
-  { id: 1, name: "Location 1" },
-  { id: 2, name: "Location 2" },
-  { id: 3, name: "Room 101" },
-  { id: 4, name: "Room 202" },
-  { id: 5, name: "Room 303" }
-];
-
-let branches = [
-  { id: 1, name: "Branch A" },
-  { id: 2, name: "Branch B" },
-  { id: 3, name: "Sciences" },
-  { id: 4, name: "Technologies" },
-  { id: 5, name: "Humanities" }
-];
-
-let majors = [
-  { id: 1, name: "Major 1" },
-  { id: 2, name: "Major 2" },
-  { id: 3, name: "Major 3" }
-];
-
-let users = [
-  {
-    id: 1,
-    username: "student1",
-    password: "password1",
-    role: "student"
-  },
-  {
-    id: 2,
-    username: "teacher1",
-    password: "password1",
-    role: "teacher"
+connection.connect(err => {
+  if (err) {
+    console.error('Error connecting to the database:', err);
+    return;
   }
-];
+  console.log('Connected to the MySQL database.');
+});
 
-let courses = [
-  {
-    id: 1,
-    courseManager: "Manager A",
-    teachers: ["Teacher A"],
-    categories: [1, 3], // Referencing category IDs
-    courseName: "Calculus",
-    courseCode: "MATH101",
-    branch: 1, // Referencing branch ID
-    major: 1, // Referencing major ID
-    credits: 3,
-    seatLimit: 30,
-    studentsRegistered: 25,
-    bibliography: "Book 1",
-    location: 1, // Referencing location ID
-    program: "This course covers advanced calculus topics..."
-  },
-  {
-    id: 2,
-    courseManager: "Manager B",
-    teachers: ["Teacher B"],
-    categories: [2], // Referencing category IDs
-    courseName: "Algorithms",
-    courseCode: "CS201",
-    branch: 2, // Referencing branch ID
-    major: 2, // Referencing major ID
-    credits: 4,
-    seatLimit: 40,
-    studentsRegistered: 35,
-    bibliography: "Book 2",
-    location: 2, // Referencing location ID
-    program: "Introduction to algorithms and data structures..."
-  }
-];
-
-let reviews = [
-  // Your reviews here
-];
-
-// Routes
+// Route pour obtenir les cours avec toutes les informations nécessaires
 app.get('/courses', (req, res) => {
-  const db = readDatabase();
-  res.json(courses);
+  const query = `
+    SELECT 
+      courses.*, 
+      branches.name AS branchName, 
+      majors.name AS majorName, 
+      locations.name AS locationName,
+      GROUP_CONCAT(categories.name) AS categoryNames
+    FROM courses
+    INNER JOIN branches ON courses.branch_id = branches.id
+    INNER JOIN majors ON courses.major_id = majors.id
+    INNER JOIN locations ON courses.location_id = locations.id
+    LEFT JOIN course_categories ON courses.id = course_categories.course_id
+    LEFT JOIN categories ON course_categories.category_id = categories.id
+    GROUP BY courses.id;
+  `;
+  connection.query(query, (err, results) => {
+    if (err) {
+      res.status(500).send('Error fetching courses');
+    } else {
+      res.json(results);
+    }
+  });
 });
 
-app.get('/courses/:courseCode', (req, res) => {
-  const courseCode = req.params.courseCode;
-  const db = readDatabase();
-  const course = courses.find(c => c.courseCode === courseCode);
-  if (course) {
-    res.json(course);
-  } else {
-    res.status(404).send('Course not found');
-  }
-});
-
-app.get('/reviews', (req, res) => {
-  const courseCode = req.query.courseCode;
-  const courseReviews = reviews.filter(r => r.courseCode === courseCode);
-  res.json(courseReviews);
-});
-
-// Routes to get categories, locations, branches, and majors
+// Routes pour obtenir les catégories, branches, majors, et locations
 app.get('/categories', (req, res) => {
-  res.json(categories);
+  connection.query('SELECT * FROM categories', (err, results) => {
+    if (err) {
+      res.status(500).send('Error fetching categories');
+    } else {
+      res.json(results);
+    }
+  });
 });
 
-app.get('/locations', (req, res) => {
-  res.json(locations);
+app.get('/categoriesByCourseId', (req, res) => {
+  const courseId = req.query.courseId;
+  const query = `
+    SELECT categories.*
+    FROM categories
+    INNER JOIN course_categories ON categories.id = course_categories.category_id
+    WHERE course_categories.course_id = ?;
+  `;
+  connection.query(query, [courseId], (err, results) => {
+    if (err) {
+      res.status(500).send('Error fetching categories');
+    } else {
+      res.json(results);
+    }
+  });
 });
 
 app.get('/branches', (req, res) => {
-  res.json(branches);
+  connection.query('SELECT * FROM branches', (err, results) => {
+    if (err) {
+      res.status(500).send('Error fetching branches');
+    } else {
+      res.json(results);
+    }
+  });
 });
 
 app.get('/majors', (req, res) => {
-  res.json(majors);
+  connection.query('SELECT * FROM majors', (err, results) => {
+    if (err) {
+      res.status(500).send('Error fetching majors');
+    } else {
+      res.json(results);
+    }
+  });
 });
 
-// Route for user login
+app.get('/locations', (req, res) => {
+  connection.query('SELECT * FROM locations', (err, results) => {
+    if (err) {
+      res.status(500).send('Error fetching locations');
+    } else {
+      res.json(results);
+    }
+  });
+});
+
+// Route pour l'authentification des utilisateurs
 app.post('/login', (req, res) => {
   const { username, password, role } = req.body;
-  const user = users.find(u => u.username === username && u.password === password && u.role === role);
-  if (user) {
-    res.json(user);
-  } else {
-    res.status(401).send('Invalid credentials');
-  }
+  connection.query('SELECT * FROM users WHERE username = ? AND password = ? AND role = ?', [username, password, role], (err, results) => {
+    if (err) {
+      res.status(500).send('Error logging in');
+    } else if (results.length > 0) {
+      res.json(results[0]);
+    } else {
+      res.status(401).send('Invalid credentials');
+    }
+  });
+});
+
+// Route pour ajouter un nouveau cours
+app.post('/courses', (req, res) => {
+  const newCourse = req.body;
+  const query = 'INSERT INTO courses (courseManager, courseName, courseCode, branch_id, major_id, credits, seatLimit, studentsRegistered, bibliography, location_id, program) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+  const values = [newCourse.courseManager, newCourse.courseName, newCourse.courseCode, newCourse.branch_id, newCourse.major_id, newCourse.credits, newCourse.seatLimit, newCourse.studentsRegistered, newCourse.bibliography, newCourse.location_id, newCourse.program];
+  connection.query(query, values, (err, results) => {
+    if (err) {
+      res.status(500).send('Error adding course');
+    } else {
+      res.status(201).json({ id: results.insertId, ...newCourse });
+    }
+  });
 });
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
 
-// Route to add a new course
-app.post('/courses', (req, res) => {
-  const newCourse = req.body;
-  const db = readDatabase();
-  newCourse.id = courses.length + 1; // Assign a new ID
-  db.courses.push(newCourse);
-  writeDatabase(db);
-  res.status(201).json(newCourse);
+// Route pour inscrire un étudiant à un cours
+app.post('/register', (req, res) => {
+  const { studentId, courseId, courseCode } = req.body;
+  if (!studentId || !courseId || !courseCode) {
+    res.status(400).send('Missing studentId, courseId or courseCode');
+    return;
+  }
+
+  // Requête pour vérifier si l'étudiant est déjà inscrit au cours
+  const checkQuery = 'SELECT * FROM registrations WHERE studentId = ? AND courseId = ?';
+  connection.query(checkQuery, [studentId, courseId], (err, results) => {
+    if (err) {
+      res.status(500).send('Error checking registration');
+      return;
+    }
+
+    if (results.length > 0) {
+      res.status(400).send('Student already registered for this course');
+      return;
+    }
+
+    // Requête pour inscrire l'étudiant au cours
+    const registerQuery = 'INSERT INTO registrations (studentId, courseId, courseCode) VALUES (?, ?, ?)';
+    connection.query(registerQuery, [studentId, courseId, courseCode], (err, results) => {
+      if (err) {
+        res.status(500).send('Error registering student :', err);
+        return;
+      }
+
+      res.status(201).send('Student registered successfully');
+    });
+  });
+});
+// Route pour obtenir les détails d'un cours spécifique
+app.get('/courseByCode', (req, res) => {
+  const courseCode = req.query.courseCode;
+  const query = `
+    SELECT 
+      courses.*,
+      branches.name AS branchName,
+      majors.name AS majorName,
+      locations.name AS locationName,
+      GROUP_CONCAT(categories.name) AS categoryNames,
+      GROUP_CONCAT(course_teachers.teacher_name) AS teacherNames
+    FROM courses
+    LEFT JOIN branches ON courses.branch_id = branches.id
+    LEFT JOIN majors ON courses.major_id = majors.id
+    LEFT JOIN locations ON courses.location_id = locations.id
+    LEFT JOIN course_categories ON courses.id = course_categories.course_id
+    LEFT JOIN categories ON course_categories.category_id = categories.id
+    LEFT JOIN course_teachers ON courses.id = course_teachers.course_id
+    WHERE courses.courseCode = ?
+    GROUP BY courses.id;
+  `;
+  connection.query(query, [courseCode], (err, results) => {
+    if (err) {
+      res.status(500).send('Error fetching course details');
+    } else {
+      res.json(results[0]); // Nous retournons le premier (et unique) résultat
+    }
+  });
+});
+
+// Route pour obtenir les critiques d'un cours spécifique
+app.get('/reviews', (req, res) => {
+  const courseCode = req.query.courseCode;
+  const query = `
+    SELECT 
+      reviews.id,
+      reviews.theory,
+      reviews.practice,
+      reviews.subject,
+      reviews.personalAppreciation,
+      reviews.comment,
+      users.name AS author_name
+    FROM reviews
+    INNER JOIN courses ON reviews.courseId = courses.id
+    INNER JOIN users ON reviews.studentId = users.id
+    WHERE courses.courseCode = ?;
+  `;
+  connection.query(query, [courseCode], (err, results) => {
+    if (err) {
+      res.status(500).send('Error fetching reviews');
+    } else {
+      res.json(results);
+    }
+  });
 });

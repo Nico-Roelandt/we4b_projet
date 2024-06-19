@@ -56,6 +56,7 @@
           <tr>
             <th>Nom du cours</th>
             <th>Code du cours</th>
+            <th>Catégories</th>
             <th>Branche</th>
             <th>Filière</th>
             <th>Lieu</th>
@@ -66,9 +67,10 @@
           <tr *ngFor="let course of filteredCourses">
             <td>{{ course.courseName }}</td>
             <td>{{ course.courseCode }}</td>
-            <td>{{ getBranchName(course.branch) }}</td>
-            <td>{{ getMajorName(course.major) }}</td>
-            <td>{{ getLocationName(course.location) }}</td>
+            <td><span *ngFor="let category of course.categories" class="badge bg-secondary me-2">{{ category }}</span></td>
+            <td>{{ course.branchName }}</td>
+            <td>{{ course.majorName }}</td>
+            <td>{{ course.locationName }}</td>
             <td><button class="btn btn-info" [routerLink]="['/courses', course.courseCode]">Information</button></td>
           </tr>
         </tbody>

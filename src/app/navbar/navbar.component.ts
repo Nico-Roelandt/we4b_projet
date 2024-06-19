@@ -50,10 +50,13 @@ export class NavbarComponent {
           setTimeout(() => {
             const modalBackdrops = document.querySelectorAll('.modal-backdrop');
             modalBackdrops.forEach(backdrop => backdrop.remove());
+            document.body.classList.remove('modal-open'); // Assurez-vous de retirer la classe 'modal-open' du body
+            document.body.style.overflow = ''; // Réinitialisez le style overflow du body
+            console.log('Body classes after modal close:', document.body.classList);
+            console.log('Body style after modal close:', document.body.style.overflow);
           }, 200); // Délai pour s'assurer que Bootstrap a terminé ses animations
         });
       }
     }
   }
-  
 }

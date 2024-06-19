@@ -15,8 +15,13 @@ export class CourseService {
   }
 
   getCourseByCourseCode(courseCode: string): Observable<any> {
-    const url = `${this.apiUrl}/courses/${courseCode}`;
+    const url = `${this.apiUrl}/courseByCode?courseCode=${courseCode}`;
     return this.http.get<any>(url);
+  }
+
+  getCourseIdByCourseCode(courseCode: string): Observable<number> {
+    const url = `${this.apiUrl}/courseIdByCode?courseCode=${courseCode}`;
+    return this.http.get<number>(url);
   }
 
   getReviewsByCourseCode(courseCode: string): Observable<any[]> {
@@ -26,6 +31,11 @@ export class CourseService {
 
   getCategories(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/categories`);
+  }
+
+  getCategoriesByCourseId(courseId: number): Observable<any[]> {
+    const url = `${this.apiUrl}/categoriesByCourseId?courseId=${courseId}`;
+    return this.http.get<any[]>(url);
   }
 
   getLocations(): Observable<any[]> {
@@ -52,5 +62,10 @@ export class CourseService {
   deleteCourse(courseCode: string): Observable<any> {
     const url = `${this.apiUrl}/courses/${courseCode}`;
     return this.http.delete<any>(url);
+  }
+
+  registerStudentForCourse(studentId: number, courseId: number, courseCode: string): Observable<any> {
+    const url = `${this.apiUrl}/register`;
+    return this.http.post<any>(url, { studentId, courseId, courseCode });
   }
 }
