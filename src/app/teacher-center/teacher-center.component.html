@@ -57,7 +57,7 @@
   <h2>Mes cours</h2>
   <ul>
     <li *ngFor="let course of courses">
-      {{ course.courseName }}
+      <a (click)="editCourse(course.id)">{{ course.courseName }}</a>
       <button (click)="closeCourse(course.id)">Fermer</button>
     </li>
   </ul>

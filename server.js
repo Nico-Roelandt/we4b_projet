@@ -109,6 +109,7 @@ app.get('/locations', (req, res) => {
 
 // Route pour l'authentification des utilisateurs
 app.post('/login', (req, res) => {
+  const db = readDatabase();
   const { username, password, role } = req.body;
   connection.query('SELECT * FROM users WHERE username = ? AND password = ? AND role = ?', [username, password, role], (err, results) => {
     if (err) {
