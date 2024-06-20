@@ -10,9 +10,15 @@ import * as bootstrap from 'bootstrap';
   styleUrls: ['./teacher-center.component.css']
 })
 export class TeacherCenterComponent implements OnInit {
-  courses: any[] = []; // Initialize as an empty array
+  courses: any[] = [];
+  branches: any[] = [];
+  majors: any[] = [];
+  locations: any[] = [];
+  teachers: string[] = ['Teacher A', 'Teacher B', 'Teacher C']; // Example teacher names
+  categories: any[] = [];
+
   newCourse: any = {
-    courseManager: this.authService.getUsername(), // Set the course manager as the logged-in user
+    courseManager: this.authService.getUsername(),
     courseName: '',
     courseCode: '',
     branch_id: null,
@@ -22,7 +28,9 @@ export class TeacherCenterComponent implements OnInit {
     studentsRegistered: 0,
     bibliography: '',
     location_id: null,
-    program: ''
+    program: '',
+    teachers: [],
+    categories: []
   };
   selectedCourse: any = null;
 
@@ -34,12 +42,31 @@ export class TeacherCenterComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadCourses();
+    this.loadDropdownData();
   }
 
   loadCourses(): void {
-    this.teacherService.getCourses().subscribe(courses => {
+    const courseManager = this.authService.getUsername();
+    this.teacherService.getCoursesByManager(courseManager).subscribe(courses => {
       this.courses = courses;
-      console.log('Courses loaded:', this.courses);
+    });
+  }
+
+  loadDropdownData(): void {
+    this.teacherService.getBranches().subscribe(branches => {
+      this.branches = branches;
+    });
+
+    this.teacherService.getMajors().subscribe(majors => {
+      this.majors = majors;
+    });
+
+    this.teacherService.getLocations().subscribe(locations => {
+      this.locations = locations;
+    });
+
+    this.teacherService.getCategories().subscribe(categories => {
+      this.categories = categories;
     });
   }
 

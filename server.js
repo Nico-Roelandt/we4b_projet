@@ -293,24 +293,24 @@ app.get('/reviews', (req, res) => {
   });
 });
 
-// Route pour soumettre des commentaires
-app.post('/submitFeedback', (req, res) => {
-  const { courseId, feedback } = req.body;
-  if (!courseId || !feedback) {
-    res.status(400).json({ message: 'Missing courseId or feedback' });
+app.post('/submitReview', (req, res) => {
+  const { courseId, studentId, theory, practice, subject, personalAppreciation, comment } = req.body;
+  if (!courseId || !studentId || theory === undefined || practice === undefined || subject === undefined || personalAppreciation === undefined || !comment) {
+    res.status(400).json({ message: 'Missing courseId, studentId, theory, practice, subject, personalAppreciation, or comment' });
     return;
   }
 
-  const query = 'INSERT INTO feedback (courseId, feedback) VALUES (?, ?)';
-  connection.query(query, [courseId, feedback], (err, results) => {
+  const query = 'INSERT INTO reviews (courseId, studentId, theory, practice, subject, personalAppreciation, comment) VALUES (?, ?, ?, ?, ?, ?, ?)';
+  connection.query(query, [courseId, studentId, theory, practice, subject, personalAppreciation, comment], (err, results) => {
     if (err) {
-      res.status(500).json({ message: 'Error submitting feedback' });
+      res.status(500).json({ message: 'Error submitting review' });
       return;
     }
 
-    res.status(201).json({ message: 'Feedback submitted successfully' });
+    res.status(201).json({ message: 'Review submitted successfully' });
   });
 });
+
 
 // Route pour désinscrire un étudiant d'un cours
 app.post('/unregisterCourse', (req, res) => {
@@ -333,4 +333,31 @@ app.post('/unregisterCourse', (req, res) => {
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
+});
+// Route pour obtenir les cours créés par un gestionnaire spécifique
+app.get('/coursesByManager', (req, res) => {
+  const courseManager = req.query.courseManager;
+  const query = `
+    SELECT 
+      courses.*, 
+      branches.name AS branchName, 
+      majors.name AS majorName, 
+      locations.name AS locationName,
+      GROUP_CONCAT(categories.name) AS categoryNames
+    FROM courses
+    INNER JOIN branches ON courses.branch_id = branches.id
+    INNER JOIN majors ON courses.major_id = majors.id
+    INNER JOIN locations ON courses.location_id = locations.id
+    LEFT JOIN course_categories ON courses.id = course_categories.course_id
+    LEFT JOIN categories ON course_categories.category_id = categories.id
+    WHERE courses.courseManager = ?
+    GROUP BY courses.id;
+  `;
+  connection.query(query, [courseManager], (err, results) => {
+    if (err) {
+      res.status(500).send('Error fetching courses');
+    } else {
+      res.json(results);
+    }
+  });
 });
