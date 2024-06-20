@@ -1,27 +1,71 @@
 <div class="student-center">
-    <h1>Centre Étudiant</h1>
-    <h2>Liste des cours</h2>
-    <ul>
-      <li *ngFor="let course of courses">
-        {{ course.name }}
-        <button (click)="viewCourseDetails(course.id)">Voir les détails</button>
-      </li>
-    </ul>
-  
-    <h2>Crédits: {{ credits }}</h2>
-  
-    <h2>Évaluations</h2>
-    <ul>
-      <li *ngFor="let assessment of assessments">
-        {{ assessment.courseName }} - {{ assessment.grade }}
-      </li>
-    </ul>
-  
-    <h2>Évaluer les cours</h2>
-    <div *ngFor="let course of courses">
-      <h3>{{ course.name }}</h3>
-      <textarea [(ngModel)]="course.feedback" placeholder="Entrez vos commentaires"></textarea>
-      <button (click)="submitFeedback(course.id, course.feedback)">Soumettre</button>
+  <h1>Centre Étudiant</h1>
+
+  <h2>Liste des cours</h2>
+  <div class="row">
+    <div class="col-md-4" *ngFor="let course of courses">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">{{ course.courseName }}</h5>
+          <p class="card-text"><strong>Code:</strong> {{ course.courseCode }}</p>
+          <p class="card-text"><strong>Crédits:</strong> {{ course.credits }}</p>
+          <p class="card-text"><strong>Professeur:</strong> {{ course.teacherNames }}</p>
+          <button class="btn btn-primary me-2" (click)="viewCourseDetails(course.courseCode)">Voir les détails</button>
+          <button class="btn btn-secondary me-2" (click)="addCourseReviews(course.id)">Ajouter une avis</button>
+          <button class="btn btn-danger" (click)="unregisterCourse(course.id)">Désinscription</button>
+        </div>
+      </div>
     </div>
   </div>
-  
+
+  <h2>Crédits totaux : {{ credits }}</h2>
+
+  <!-- Modal pour ajouter une avis -->
+  <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="reviewModalLabel">Ajouter une avis</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="theory" class="form-label">Théorie</label>
+              <input type="number" class="form-control" id="theory" [(ngModel)]="newReview.theory" name="theory" min="0" max="5">
+            </div>
+            <div class="mb-3">
+              <label for="practice" class="form-label">Pratique</label>
+              <input type="number" class="form-control" id="practice" [(ngModel)]="newReview.practice" name="practice" min="0" max="5">
+            </div>
+            <div class="mb-3">
+              <label for="subject" class="form-label">Sujet</label>
+              <input type="number" class="form-control" id="subject" [(ngModel)]="newReview.subject" name="subject" min="0" max="5">
+            </div>
+            <div class="mb-3">
+              <label for="personalAppreciation" class="form-label">Appréciation personnelle</label>
+              <input type="number" class="form-control" id="personalAppreciation" [(ngModel)]="newReview.personalAppreciation" name="personalAppreciation" min="0" max="5">
+            </div>
+            <div class="mb-3">
+              <label for="comment" class="form-label">Commentaire</label>
+              <textarea class="form-control" id="comment" [(ngModel)]="newReview.comment" name="comment"></textarea>
+            </div>
+            <button type="button" class="btn btn-primary" (click)="submitReview()">Soumettre</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toasts -->
+  <div class="toast-container position-fixed top-0 end-0 p-3">
+    <div class="toast align-items-center text-white bg-info border-0" id="infoToast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">
+          <!-- Message content will be inserted dynamically -->
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Fermer"></button>
+      </div>
+    </div>
+  </div>
+</div>

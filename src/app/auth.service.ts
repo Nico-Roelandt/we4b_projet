@@ -13,7 +13,23 @@ export class AuthService {
   private username: string = '';
   private userId: number = 0;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.loadFromLocalStorage();
+  }
+
+  private saveToLocalStorage() {
+    localStorage.setItem('isAuthenticated', JSON.stringify(this.isAuthenticated));
+    localStorage.setItem('role', this.role);
+    localStorage.setItem('username', this.username);
+    localStorage.setItem('userId', JSON.stringify(this.userId));
+  }
+
+  private loadFromLocalStorage() {
+    this.isAuthenticated = JSON.parse(localStorage.getItem('isAuthenticated') || 'false');
+    this.role = localStorage.getItem('role') || '';
+    this.username = localStorage.getItem('username') || '';
+    this.userId = JSON.parse(localStorage.getItem('userId') || '0');
+  }
 
   login(username: string, password: string, role: string): Observable<boolean> {
     return this.http.post<any>(`${this.apiUrl}/login`, { username, password, role })
@@ -24,6 +40,7 @@ export class AuthService {
             this.role = role;
             this.username = username;
             this.userId = user.id;
+            this.saveToLocalStorage();
             return true;
           }
           return false;
@@ -37,6 +54,7 @@ export class AuthService {
     this.role = '';
     this.username = '';
     this.userId = 0;
+    localStorage.clear();
   }
 
   getRole(): string {

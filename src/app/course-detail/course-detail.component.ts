@@ -61,6 +61,14 @@ export class CourseDetailComponent implements OnInit {
     this.courseService.registerStudentForCourse(studentId, courseId, courseCode).subscribe(response => {
       console.log('response:', response);
       this.showToast('You have successfully registered for the course.', 'success');
+    },
+    error => {
+      if (error.status === 400 && error.error === 'Student already registered for this course') {
+        this.showToast('You are already registered for this course.', 'error');
+      } else {
+        this.showToast('Failed to register for the course.', 'error');
+      }
+      console.error('Error registering for course:', error);
     });
   }
 

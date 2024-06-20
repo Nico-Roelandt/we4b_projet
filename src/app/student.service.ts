@@ -6,13 +6,24 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class StudentService {
+
+  private apiUrl = 'http://localhost:3000';
+
   constructor(private http: HttpClient) {}
 
   getCoursesByStudent(studentId: number): Observable<any> {
-    return this.http.get(`/api/students/${studentId}/courses`);
+    return this.http.get<any>(`${this.apiUrl}/studentCourses`, { params: { studentId: studentId.toString() } });
   }
 
   submitFeedback(courseId: number, feedback: string): Observable<any> {
-    return this.http.post(`/api/courses/${courseId}/feedback`, { feedback });
+    return this.http.post<any>(`${this.apiUrl}/submitFeedback`, { courseId, feedback });
+  }
+
+  unregisterCourse(studentId: number, courseId: number): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/unregisterCourse`, { studentId, courseId });
+  }
+
+  submitReview(reviewData: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/submitReview`, reviewData);
   }
 }

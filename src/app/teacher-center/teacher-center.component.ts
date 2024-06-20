@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { TeacherService } from '../teacher.service';
 import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
+import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-teacher-center',
@@ -9,73 +10,87 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./teacher-center.component.css']
 })
 export class TeacherCenterComponent implements OnInit {
-  courses: any[] = [];
-  course: any = {
-    courseManager: '',
-    teachers: '',
-    categories: '',
+  courses: any[] = []; // Initialize as an empty array
+  newCourse: any = {
+    courseManager: this.authService.getUsername(), // Set the course manager as the logged-in user
     courseName: '',
     courseCode: '',
-    branch: '',
-    major: '',
-    credits: 0,
-    seatLimit: 0,
+    branch_id: null,
+    major_id: null,
+    credits: null,
+    seatLimit: null,
     studentsRegistered: 0,
     bibliography: '',
-    location: '',
+    location_id: null,
     program: ''
   };
-  personalInfo: any = {};
+  selectedCourse: any = null;
 
-  constructor(private teacherService: TeacherService, private authService: AuthService, private router: Router) { }
+  constructor(
+    private teacherService: TeacherService,
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
-    this.loadTeacherData();
+    this.loadCourses();
   }
 
-  loadTeacherData() {
-    const teacherId = this.authService.getTeacherId();
-    this.teacherService.getCoursesByTeacher(teacherId).subscribe(data => {
-      this.courses = data.courses;
-    });
-    this.teacherService.getTeacherInfo(teacherId).subscribe(data => {
-      this.personalInfo = data;
+  loadCourses(): void {
+    this.teacherService.getCourses().subscribe(courses => {
+      this.courses = courses;
+      console.log('Courses loaded:', this.courses);
     });
   }
 
-  createCourse() {
-    const courseToCreate = { 
-      ...this.course, 
-      teachers: this.course.teachers.split(','), 
-      categories: this.course.categories.split(',').map(Number) 
-    };
-    this.teacherService.createCourse(courseToCreate).subscribe(response => {
-      this.course = {
-        courseManager: '',
-        teachers: '',
-        categories: '',
-        courseName: '',
-        courseCode: '',
-        branch: '',
-        major: '',
-        credits: 0,
-        seatLimit: 0,
-        studentsRegistered: 0,
-        bibliography: '',
-        location: '',
-        program: ''
-      };
-      this.loadTeacherData();
+  openCreateCourseModal(): void {
+    const createCourseModal = new bootstrap.Modal(document.getElementById('createCourseModal')!);
+    createCourseModal.show();
+  }
+
+  openEditCourseModal(course: any): void {
+    this.selectedCourse = { ...course };
+    const editCourseModal = new bootstrap.Modal(document.getElementById('editCourseModal')!);
+    editCourseModal.show();
+  }
+
+  createCourse(): void {
+    this.teacherService.addCourse(this.newCourse).subscribe(response => {
+      this.showToast('Course created successfully.', 'success');
+      this.loadCourses();
+    }, error => {
+      this.showToast('Error creating course.', 'error');
     });
   }
 
-  editCourse(courseId: number) {
-    this.router.navigate(['/edit-course', courseId]);
+  updateCourse(): void {
+    this.teacherService.updateCourse(this.selectedCourse.id, this.selectedCourse).subscribe(response => {
+      this.showToast('Course updated successfully.', 'success');
+      this.loadCourses();
+    }, error => {
+      this.showToast('Error updating course.', 'error');
+    });
   }
 
-  closeCourse(courseId: number) {
-    this.teacherService.closeCourse(courseId).subscribe(response => {
-      this.loadTeacherData();
-    });
+  deleteCourse(courseId: number): void {
+    if (confirm('Are you sure you want to delete this course?')) {
+      this.teacherService.deleteCourse(courseId).subscribe(response => {
+        this.showToast('Course deleted successfully.', 'success');
+        this.loadCourses();
+      }, error => {
+        this.showToast('Error deleting course.', 'error');
+      });
+    }
+  }
+
+  private showToast(message: string, type: 'success' | 'error'): void {
+    const toastElement = document.getElementById('infoToast')!;
+    const toastBody = toastElement.querySelector('.toast-body')!;
+
+    toastBody.textContent = message;
+    toastElement.className = `toast align-items-center text-white ${type === 'success' ? 'bg-success' : 'bg-danger'} border-0`;
+
+    const toast = new bootstrap.Toast(toastElement);
+    toast.show();
   }
 }

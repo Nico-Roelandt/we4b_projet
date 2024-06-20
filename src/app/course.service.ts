@@ -62,7 +62,6 @@ export class CourseService {
   }
 
   registerStudentForCourse(studentId: number, courseId: number, courseCode: string): Observable<any> {
-    const url = `${this.apiUrl}/register`;
-    return this.http.post<any>(url, { studentId, courseId, courseCode });
+    return this.http.post<any>(`${this.apiUrl}/register`, { studentId, courseId, courseCode });
   }
 }

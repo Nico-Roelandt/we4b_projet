@@ -1,71 +1,181 @@
 <div class="teacher-center">
-  <h1>Centre Enseignant</h1>
+  <h1>Teacher Center</h1>
+  <button class="btn btn-primary mb-3" (click)="openCreateCourseModal()">Create Course</button>
 
-  <h2>Créer un cours</h2>
-  <form (ngSubmit)="createCourse()">
-    <div>
-      <label for="courseName">Nom du cours:</label>
-      <input id="courseName" [(ngModel)]="course.courseName" name="courseName" required>
+  <div class="row" *ngIf="courses.length > 0">
+    <div class="col-md-4" *ngFor="let course of courses">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">{{ course.courseName }}</h5>
+          <p class="card-text"><strong>Code:</strong> {{ course.courseCode }}</p>
+          <p class="card-text"><strong>Crédits:</strong> {{ course.credits }}</p>
+          <p class="card-text"><strong>Professeur:</strong> {{ course.courseManager }}</p>
+          <button class="btn btn-secondary me-2" (click)="openEditCourseModal(course)">Edit</button>
+          <button class="btn btn-danger" (click)="deleteCourse(course.id)">Delete</button>
+        </div>
+      </div>
     </div>
-    <div>
-      <label for="courseCode">Code du cours:</label>
-      <input id="courseCode" [(ngModel)]="course.courseCode" name="courseCode" required>
-    </div>
-    <div>
-      <label for="courseManager">Responsable du cours:</label>
-      <input id="courseManager" [(ngModel)]="course.courseManager" name="courseManager" required>
-    </div>
-    <div>
-      <label for="teachers">Professeurs (séparés par des virgules):</label>
-      <input id="teachers" [(ngModel)]="course.teachers" name="teachers" required>
-    </div>
-    <div>
-      <label for="categories">Catégories (IDs séparés par des virgules):</label>
-      <input id="categories" [(ngModel)]="course.categories" name="categories" required>
-    </div>
-    <div>
-      <label for="branch">Branche:</label>
-      <input id="branch" [(ngModel)]="course.branch" name="branch" required>
-    </div>
-    <div>
-      <label for="major">Filière:</label>
-      <input id="major" [(ngModel)]="course.major" name="major" required>
-    </div>
-    <div>
-      <label for="credits">Crédits:</label>
-      <input id="credits" type="number" [(ngModel)]="course.credits" name="credits" required>
-    </div>
-    <div>
-      <label for="seatLimit">Limite de sièges:</label>
-      <input id="seatLimit" type="number" [(ngModel)]="course.seatLimit" name="seatLimit" required>
-    </div>
-    <div>
-      <label for="bibliography">Bibliographie:</label>
-      <input id="bibliography" [(ngModel)]="course.bibliography" name="bibliography" required>
-    </div>
-    <div>
-      <label for="location">Lieu:</label>
-      <input id="location" [(ngModel)]="course.location" name="location" required>
-    </div>
-    <div>
-      <label for="program">Programme:</label>
-      <textarea id="program" [(ngModel)]="course.program" name="program" required></textarea>
-    </div>
-    <button type="submit">Créer</button>
-  </form>
+  </div>
 
-  <h2>Mes cours</h2>
-  <ul>
-    <li *ngFor="let course of courses">
-      <a (click)="editCourse(course.id)">{{ course.courseName }}</a>
-      <button (click)="closeCourse(course.id)">Fermer</button>
-    </li>
-  </ul>
+  <!-- Create Course Modal -->
+  <div class="modal fade" id="createCourseModal" tabindex="-1" aria-labelledby="createCourseModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg"> <!-- Use modal-lg class to make the modal larger -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="createCourseModalLabel">Create Course</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="createCourse()">
+            <div class="mb-3">
+              <label for="courseManager" class="form-label">Course Manager</label>
+              <input type="text" class="form-control" id="courseManager" [(ngModel)]="newCourse.courseManager" name="courseManager" required>
+            </div>
+            <div class="mb-3">
+              <label for="courseName" class="form-label">Course Name</label>
+              <input type="text" class="form-control" id="courseName" [(ngModel)]="newCourse.courseName" name="courseName" required>
+            </div>
+            <div class="mb-3">
+              <label for="courseCode" class="form-label">Course Code</label>
+              <input type="text" class="form-control" id="courseCode" [(ngModel)]="newCourse.courseCode" name="courseCode" required>
+            </div>
+            <div class="mb-3">
+              <label for="branch_id" class="form-label">Branch</label>
+              <select class="form-control" id="branch_id" [(ngModel)]="newCourse.branch_id" name="branch_id" required>
+                <option *ngFor="let branch of branches" [value]="branch.id">{{ branch.name }}</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="major_id" class="form-label">Major</label>
+              <select class="form-control" id="major_id" [(ngModel)]="newCourse.major_id" name="major_id" required>
+                <option *ngFor="let major of majors" [value]="major.id">{{ major.name }}</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="credits" class="form-label">Credits</label>
+              <input type="number" class="form-control" id="credits" [(ngModel)]="newCourse.credits" name="credits" required>
+            </div>
+            <div class="mb-3">
+              <label for="seatLimit" class="form-label">Seat Limit</label>
+              <input type="number" class="form-control" id="seatLimit" [(ngModel)]="newCourse.seatLimit" name="seatLimit" required>
+            </div>
+            <div class="mb-3">
+              <label for="bibliography" class="form-label">Bibliography</label>
+              <input type="text" class="form-control" id="bibliography" [(ngModel)]="newCourse.bibliography" name="bibliography" required>
+            </div>
+            <div class="mb-3">
+              <label for="location_id" class="form-label">Location</label>
+              <select class="form-control" id="location_id" [(ngModel)]="newCourse.location_id" name="location_id" required>
+                <option *ngFor="let location of locations" [value]="location.id">{{ location.name }}</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="program" class="form-label">Program</label>
+              <textarea class="form-control" id="program" [(ngModel)]="newCourse.program" name="program" required></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="teachers" class="form-label">Teachers</label>
+              <select class="form-control" id="teachers" multiple [(ngModel)]="newCourse.teachers" name="teachers" required>
+                <option *ngFor="let teacher of teachers" [value]="teacher">{{ teacher }}</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="categories" class="form-label">Categories</label>
+              <select class="form-control" id="categories" multiple [(ngModel)]="newCourse.categories" name="categories" required>
+                <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Create</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <h2>Page personnelle</h2>
-  <p><strong>Email:</strong> {{ personalInfo.email }}</p>
-  <p><strong>Cours enseignés:</strong></p>
-  <ul>
-    <li *ngFor="let course of personalInfo.taughtCourses">{{ course }}</li>
-  </ul>
+  <!-- Edit Course Modal -->
+  <div class="modal fade" id="editCourseModal" tabindex="-1" aria-labelledby="editCourseModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg"> <!-- Use modal-lg class to make the modal larger -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editCourseModalLabel">Edit Course</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" *ngIf="selectedCourse">
+          <form (ngSubmit)="updateCourse()">
+            <div class="mb-3">
+              <label for="editCourseManager" class="form-label">Course Manager</label>
+              <input type="text" class="form-control" id="editCourseManager" [(ngModel)]="selectedCourse.courseManager" name="courseManager" required>
+            </div>
+            <div class="mb-3">
+              <label for="editCourseName" class="form-label">Course Name</label>
+              <input type="text" class="form-control" id="editCourseName" [(ngModel)]="selectedCourse.courseName" name="courseName" required>
+            </div>
+            <div class="mb-3">
+              <label for="editCourseCode" class="form-label">Course Code</label>
+              <input type="text" class="form-control" id="editCourseCode" [(ngModel)]="selectedCourse.courseCode" name="courseCode" required>
+            </div>
+            <div class="mb-3">
+              <label for="editBranch_id" class="form-label">Branch</label>
+              <select class="form-control" id="editBranch_id" [(ngModel)]="selectedCourse.branch_id" name="branch_id" required>
+                <option *ngFor="let branch of branches" [value]="branch.id">{{ branch.name }}</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="editMajor_id" class="form-label">Major</label>
+              <select class="form-control" id="editMajor_id" [(ngModel)]="selectedCourse.major_id" name="major_id" required>
+                <option *ngFor="let major of majors" [value]="major.id">{{ major.name }}</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="editCredits" class="form-label">Credits</label>
+              <input type="number" class="form-control" id="editCredits" [(ngModel)]="selectedCourse.credits" name="credits" required>
+            </div>
+            <div class="mb-3">
+              <label for="editSeatLimit" class="form-label">Seat Limit</label>
+              <input type="number" class="form-control" id="editSeatLimit" [(ngModel)]="selectedCourse.seatLimit" name="seatLimit" required>
+            </div>
+            <div class="mb-3">
+              <label for="editBibliography" class="form-label">Bibliography</label>
+              <input type="text" class="form-control" id="editBibliography" [(ngModel)]="selectedCourse.bibliography" name="bibliography" required>
+            </div>
+            <div class="mb-3">
+              <label for="editLocation_id" class="form-label">Location</label>
+              <select class="form-control" id="editLocation_id" [(ngModel)]="selectedCourse.location_id" name="location_id" required>
+                <option *ngFor="let location of locations" [value]="location.id">{{ location.name }}</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="editProgram" class="form-label">Program</label>
+              <textarea class="form-control" id="editProgram" [(ngModel)]="selectedCourse.program" name="program" required></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="editTeachers" class="form-label">Teachers</label>
+              <select class="form-control" id="editTeachers" multiple [(ngModel)]="selectedCourse.teachers" name="teachers" required>
+                <option *ngFor="let teacher of teachers" [value]="teacher">{{ teacher }}</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="editCategories" class="form-label">Categories</label>
+              <select class="form-control" id="editCategories" multiple [(ngModel)]="selectedCourse.categories" name="categories" required>
+                <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toasts -->
+  <div class="toast-container position-fixed top-0 end-0 p-3">
+    <div class="toast align-items-center text-white bg-info border-0" id="infoToast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">
+          <!-- Message content will be inserted dynamically -->
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
 </div>
