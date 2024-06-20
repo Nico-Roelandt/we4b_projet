@@ -2,15 +2,20 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.14.
 
-## MySQL module
 
-Need : npm install mysql2 
+## Install dependencies
 
+npm install
 
-## Json server
+## JS server
 
-json-server --watch mydb.json
+node server.js
 
 ## Angular server
 
 ng serve
+
+## Database
+
+Import web4_database in you database server
+Change database information in server.js
