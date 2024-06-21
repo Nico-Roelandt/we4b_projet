@@ -13,12 +13,21 @@
           <button class="btn btn-primary me-2" (click)="viewCourseDetails(course.courseCode)">Voir les détails</button>
           <button class="btn btn-secondary me-2" (click)="addCourseReviews(course.id)">Ajouter une avis</button>
           <button class="btn btn-danger" (click)="unregisterCourse(course.id)">Désinscription</button>
+          <button class="btn btn-info" (click)="viewEvaluation(course.id)">Voir l'évaluation</button>
         </div>
       </div>
     </div>
   </div>
 
   <h2>Crédits totaux : {{ credits }}</h2>
+
+  <h2>Crédits gagnés : {{ earnedCredits }}</h2>
+  <ul>
+    <li *ngFor="let evaluation of evaluations">
+      {{ evaluation.courseName }} ({{ evaluation.courseCode }}): {{ evaluation.grade }}
+    </li>
+  </ul>
+
 
   <!-- Modal pour ajouter une avis -->
   <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
@@ -52,6 +61,22 @@
             </div>
             <button type="button" class="btn btn-primary" (click)="submitReview()">Soumettre</button>
           </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal pour voir l'évaluation -->
+  <div class="modal fade" id="evaluationModal" tabindex="-1" aria-labelledby="evaluationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="evaluationModalLabel">Évaluation</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p><strong>Grade:</strong> {{ currentEvaluation.grade }}</p>
+          <p><strong>Comment:</strong> {{ currentEvaluation.comment }}</p>
         </div>
       </div>
     </div>

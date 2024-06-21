@@ -110,6 +110,13 @@ export class TeacherCenterComponent implements OnInit {
     }
   }
 
+  viewStudentManagement(courseId: number): void {
+    const course = this.courses.find(c => c.id === courseId);
+    if (course) {
+      this.router.navigate(['/student-management', courseId, course.courseName]);
+    }
+  }
+
   private showToast(message: string, type: 'success' | 'error'): void {
     const toastElement = document.getElementById('infoToast')!;
     const toastBody = toastElement.querySelector('.toast-body')!;

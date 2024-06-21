@@ -44,4 +44,20 @@ export class TeacherService {
   getCoursesByManager(courseManager: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/coursesByManager?courseManager=${courseManager}`);
   }
+
+  getCourseStudents(courseId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/courseStudents?courseId=${courseId}`);
+  }
+
+  getStudentEvaluation(courseId: number, studentId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/studentEvaluation?courseId=${courseId}&studentId=${studentId}`);
+  }
+
+  submitStudentEvaluation(data: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/submitEvaluation`, data);
+  }
+
+  getStudentName(studentId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/studentName?studentId=${studentId}`);
+  }
 }

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1
--- Généré le : jeu. 20 juin 2024 à 17:00
--- Version du serveur : 10.4.24-MariaDB
--- Version de PHP : 8.1.6
+-- 主机： 127.0.0.1
+-- 生成日期： 2024-06-21 14:51:42
+-- 服务器版本： 10.4.32-MariaDB
+-- PHP 版本： 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,22 +18,22 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `we4b_database`
+-- 数据库： `we4b_database`
 --
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `branches`
+-- 表的结构 `branches`
 --
 
 CREATE TABLE `branches` (
   `id` int(11) NOT NULL,
   `name` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `branches`
+-- 转存表中的数据 `branches`
 --
 
 INSERT INTO `branches` (`id`, `name`) VALUES
@@ -46,16 +46,16 @@ INSERT INTO `branches` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `categories`
+-- 表的结构 `categories`
 --
 
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
   `name` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `categories`
+-- 转存表中的数据 `categories`
 --
 
 INSERT INTO `categories` (`id`, `name`) VALUES
@@ -66,7 +66,7 @@ INSERT INTO `categories` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `courses`
+-- 表的结构 `courses`
 --
 
 CREATE TABLE `courses` (
@@ -82,52 +82,53 @@ CREATE TABLE `courses` (
   `bibliography` varchar(255) DEFAULT NULL,
   `location_id` int(11) DEFAULT NULL,
   `program` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `courses`
+-- 转存表中的数据 `courses`
 --
 
 INSERT INTO `courses` (`id`, `courseManager`, `courseName`, `courseCode`, `branch_id`, `major_id`, `credits`, `seatLimit`, `studentsRegistered`, `bibliography`, `location_id`, `program`) VALUES
 (1, 'Manager Name', 'Course Name', 'COURSE101', 1, 1, 3, 30, 0, 'Bibliography details', 1, 'Course program details'),
 (2, 'teacher1', 'Optique', 'OTP201', 1, 1, 2, 35, 0, 'Book 1 by Elie Vitrai', 3, 'Un cours à propos des optiques'),
-(3, 'teacher1', 'Littérature', 'LT01', 2, 2, 2, 50, 0, 'Book 5', 4, '');
+(3, 'teacher1', 'Littérature', 'LT01', 2, 2, 2, 50, 0, 'Book 5', 4, ''),
+(4, 'teacher1', 'Relations internationales', 'CC01', 5, 1, 5, 30, 0, 'BOOK 3', 4, 'Explorer les relations internationales');
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `course_categories`
+-- 表的结构 `course_categories`
 --
 
 CREATE TABLE `course_categories` (
   `course_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `course_teachers`
+-- 表的结构 `course_teachers`
 --
 
 CREATE TABLE `course_teachers` (
   `course_id` int(11) NOT NULL,
   `teacher_name` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `locations`
+-- 表的结构 `locations`
 --
 
 CREATE TABLE `locations` (
   `id` int(11) NOT NULL,
   `name` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `locations`
+-- 转存表中的数据 `locations`
 --
 
 INSERT INTO `locations` (`id`, `name`) VALUES
@@ -140,16 +141,16 @@ INSERT INTO `locations` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `majors`
+-- 表的结构 `majors`
 --
 
 CREATE TABLE `majors` (
   `id` int(11) NOT NULL,
   `name` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `majors`
+-- 转存表中的数据 `majors`
 --
 
 INSERT INTO `majors` (`id`, `name`) VALUES
@@ -160,7 +161,7 @@ INSERT INTO `majors` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `registrations`
+-- 表的结构 `registrations`
 --
 
 CREATE TABLE `registrations` (
@@ -168,19 +169,23 @@ CREATE TABLE `registrations` (
   `studentId` int(11) NOT NULL,
   `courseId` int(11) NOT NULL,
   `courseCode` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `registrations`
+-- 转存表中的数据 `registrations`
 --
 
 INSERT INTO `registrations` (`id`, `studentId`, `courseId`, `courseCode`) VALUES
-(9, 1, 1, 'COURSE101');
+(10, 2, 1, 'COURSE101'),
+(12, 1, 1, 'COURSE101'),
+(14, 1, 3, 'LT01'),
+(15, 1, 2, 'OTP201'),
+(16, 1, 4, 'CC01');
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `reviews`
+-- 表的结构 `reviews`
 --
 
 CREATE TABLE `reviews` (
@@ -192,10 +197,10 @@ CREATE TABLE `reviews` (
   `subject` int(11) DEFAULT NULL,
   `personalAppreciation` int(11) DEFAULT NULL,
   `comment` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `reviews`
+-- 转存表中的数据 `reviews`
 --
 
 INSERT INTO `reviews` (`id`, `courseId`, `studentId`, `theory`, `practice`, `subject`, `personalAppreciation`, `comment`) VALUES
@@ -204,7 +209,28 @@ INSERT INTO `reviews` (`id`, `courseId`, `studentId`, `theory`, `practice`, `sub
 -- --------------------------------------------------------
 
 --
--- Structure de la table `users`
+-- 表的结构 `student_evaluations`
+--
+
+CREATE TABLE `student_evaluations` (
+  `id` int(11) NOT NULL,
+  `course_id` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `grade` char(1) NOT NULL,
+  `comment` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 转存表中的数据 `student_evaluations`
+--
+
+INSERT INTO `student_evaluations` (`id`, `course_id`, `student_id`, `grade`, `comment`) VALUES
+(1, 4, 1, 'F', 'good');
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `users`
 --
 
 CREATE TABLE `users` (
@@ -213,10 +239,10 @@ CREATE TABLE `users` (
   `password` varchar(50) DEFAULT NULL,
   `role` varchar(20) DEFAULT NULL,
   `name` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `users`
+-- 转存表中的数据 `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `role`, `name`) VALUES
@@ -224,24 +250,24 @@ INSERT INTO `users` (`id`, `username`, `password`, `role`, `name`) VALUES
 (2, 'teacher1', 'password1', 'teacher', 'Teacher One');
 
 --
--- Index pour les tables déchargées
+-- 转储表的索引
 --
 
 --
--- Index pour la table `branches`
+-- 表的索引 `branches`
 --
 ALTER TABLE `branches`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`);
 
 --
--- Index pour la table `categories`
+-- 表的索引 `categories`
 --
 ALTER TABLE `categories`
   ADD KEY `id` (`id`);
 
 --
--- Index pour la table `courses`
+-- 表的索引 `courses`
 --
 ALTER TABLE `courses`
   ADD PRIMARY KEY (`id`),
@@ -250,26 +276,26 @@ ALTER TABLE `courses`
   ADD KEY `location_id` (`location_id`);
 
 --
--- Index pour la table `course_categories`
+-- 表的索引 `course_categories`
 --
 ALTER TABLE `course_categories`
   ADD PRIMARY KEY (`course_id`,`category_id`),
   ADD KEY `category_id` (`category_id`);
 
 --
--- Index pour la table `course_teachers`
+-- 表的索引 `course_teachers`
 --
 ALTER TABLE `course_teachers`
   ADD PRIMARY KEY (`course_id`,`teacher_name`);
 
 --
--- Index pour la table `locations`
+-- 表的索引 `locations`
 --
 ALTER TABLE `locations`
   ADD PRIMARY KEY (`id`);
 
 --
--- Index pour la table `majors`
+-- 表的索引 `majors`
 --
 ALTER TABLE `majors`
   ADD PRIMARY KEY (`id`),
@@ -277,7 +303,7 @@ ALTER TABLE `majors`
   ADD KEY `id_2` (`id`);
 
 --
--- Index pour la table `registrations`
+-- 表的索引 `registrations`
 --
 ALTER TABLE `registrations`
   ADD PRIMARY KEY (`id`),
@@ -285,7 +311,7 @@ ALTER TABLE `registrations`
   ADD KEY `courseId` (`courseId`);
 
 --
--- Index pour la table `reviews`
+-- 表的索引 `reviews`
 --
 ALTER TABLE `reviews`
   ADD PRIMARY KEY (`id`),
@@ -293,33 +319,47 @@ ALTER TABLE `reviews`
   ADD KEY `studentId` (`studentId`);
 
 --
--- Index pour la table `users`
+-- 表的索引 `student_evaluations`
+--
+ALTER TABLE `student_evaluations`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_evaluation` (`course_id`,`student_id`),
+  ADD KEY `student_id` (`student_id`);
+
+--
+-- 表的索引 `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT pour les tables déchargées
+-- 在导出的表使用AUTO_INCREMENT
 --
 
 --
--- AUTO_INCREMENT pour la table `courses`
+-- 使用表AUTO_INCREMENT `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT pour la table `registrations`
+-- 使用表AUTO_INCREMENT `registrations`
 --
 ALTER TABLE `registrations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- Contraintes pour les tables déchargées
+-- 使用表AUTO_INCREMENT `student_evaluations`
+--
+ALTER TABLE `student_evaluations`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- 限制导出的表
 --
 
 --
--- Contraintes pour la table `courses`
+-- 限制表 `courses`
 --
 ALTER TABLE `courses`
   ADD CONSTRAINT `courses_ibfk_1` FOREIGN KEY (`branch_id`) REFERENCES `branches` (`id`),
@@ -327,30 +367,37 @@ ALTER TABLE `courses`
   ADD CONSTRAINT `courses_ibfk_3` FOREIGN KEY (`location_id`) REFERENCES `locations` (`id`);
 
 --
--- Contraintes pour la table `course_categories`
+-- 限制表 `course_categories`
 --
 ALTER TABLE `course_categories`
   ADD CONSTRAINT `course_categories_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`);
 
 --
--- Contraintes pour la table `course_teachers`
+-- 限制表 `course_teachers`
 --
 ALTER TABLE `course_teachers`
   ADD CONSTRAINT `course_teachers_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`);
 
 --
--- Contraintes pour la table `registrations`
+-- 限制表 `registrations`
 --
 ALTER TABLE `registrations`
   ADD CONSTRAINT `registrations_ibfk_1` FOREIGN KEY (`courseId`) REFERENCES `courses` (`id`),
   ADD CONSTRAINT `registrations_ibfk_2` FOREIGN KEY (`studentId`) REFERENCES `users` (`id`);
 
 --
--- Contraintes pour la table `reviews`
+-- 限制表 `reviews`
 --
 ALTER TABLE `reviews`
   ADD CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`studentId`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`courseId`) REFERENCES `courses` (`id`);
+
+--
+-- 限制表 `student_evaluations`
+--
+ALTER TABLE `student_evaluations`
+  ADD CONSTRAINT `student_evaluations_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`),
+  ADD CONSTRAINT `student_evaluations_ibfk_2` FOREIGN KEY (`student_id`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

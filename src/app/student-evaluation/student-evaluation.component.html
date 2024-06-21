@@ -1,0 +1,25 @@
+<div class="container mt-5">
+    <div class="row mb-4">
+      <div class="col">
+        <h1>Evaluation for {{ studentName }}</h1>
+        <a [routerLink]="['/student-management', courseId, courseName]" class="btn btn-primary">
+          ← Back to Student Management
+        </a>
+      </div>
+    </div>
+  
+    <form (ngSubmit)="submitEvaluation()">
+      <div class="mb-3">
+        <label for="grade" class="form-label">Grade</label>
+        <select id="grade" class="form-select" [(ngModel)]="evaluation.grade" name="grade" required>
+          <option *ngFor="let grade of grades" [value]="grade">{{ grade }}</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="comment" class="form-label">Comment</label>
+        <textarea id="comment" class="form-control" [(ngModel)]="evaluation.comment" name="comment"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+  

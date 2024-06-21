@@ -3,7 +3,7 @@ import { StudentService } from '../student.service';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { Toast } from 'bootstrap';
-import * as bootstrap from 'bootstrap'; // Ajout de l'importation de Bootstrap
+import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-student-center',
@@ -13,8 +13,8 @@ import * as bootstrap from 'bootstrap'; // Ajout de l'importation de Bootstrap
 export class StudentCenterComponent implements OnInit {
   courses: any[] = [];
   credits: number = 0;
-  assessments: any[] = [];
-  feedback: any[] = [];
+  earnedCredits: number = 0;
+  evaluations: any[] = [];
   newReview: any = {
     courseId: 0,
     studentId: 0,
@@ -22,6 +22,10 @@ export class StudentCenterComponent implements OnInit {
     practice: 0,
     subject: 0,
     personalAppreciation: 0,
+    comment: ''
+  };
+  currentEvaluation: any = {
+    grade: '',
     comment: ''
   };
 
@@ -37,7 +41,29 @@ export class StudentCenterComponent implements OnInit {
     this.studentService.getCoursesByStudent(studentId).subscribe(data => {
       this.courses = data.courses;
       this.credits = data.credits;
-      this.assessments = data.assessments;
+      this.loadEvaluations();
+    });
+  }
+
+  loadEvaluations() {
+    const studentId = this.authService.getStudentId();
+    this.evaluations = [];
+    this.earnedCredits = 0;
+
+    this.courses.forEach(course => {
+      this.studentService.getStudentEvaluation(course.id, studentId).subscribe(evaluation => {
+        if (evaluation) {
+          this.evaluations.push({
+            courseName: course.courseName,
+            courseCode: course.courseCode,
+            grade: evaluation.grade
+          });
+
+          if (['A', 'B', 'C', 'D', 'E'].includes(evaluation.grade)) {
+            this.earnedCredits += course.credits;
+          }
+        }
+      });
     });
   }
 
@@ -59,6 +85,18 @@ export class StudentCenterComponent implements OnInit {
       const reviewModal = new bootstrap.Modal(reviewModalElement);
       reviewModal.show();
     }
+  }
+
+  viewEvaluation(courseId: number) {
+    const studentId = this.authService.getStudentId();
+    this.studentService.getStudentEvaluation(courseId, studentId).subscribe(evaluation => {
+      this.currentEvaluation = evaluation || { grade: '', comment: '' };
+      const evaluationModalElement = document.getElementById('evaluationModal');
+      if (evaluationModalElement) {
+        const evaluationModal = new bootstrap.Modal(evaluationModalElement);
+        evaluationModal.show();
+      }
+    });
   }
 
   submitReview() {

@@ -12,6 +12,7 @@
           <p class="card-text"><strong>Professeur:</strong> {{ course.courseManager }}</p>
           <button class="btn btn-secondary me-2" (click)="openEditCourseModal(course)">Edit</button>
           <button class="btn btn-danger" (click)="deleteCourse(course.id)">Delete</button>
+          <button class="btn btn-primary mb-3" (click)="viewStudentManagement(course.id)">Manage Students</button>
         </div>
       </div>
     </div>

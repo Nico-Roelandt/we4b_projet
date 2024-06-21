@@ -361,3 +361,55 @@ app.get('/coursesByManager', (req, res) => {
     }
   });
 });
+
+
+// 获取课程的学生名单
+app.get('/courseStudents', (req, res) => {
+  const courseId = req.query.courseId;
+  const query = `
+    SELECT users.id, users.name 
+    FROM registrations 
+    INNER JOIN users ON registrations.studentId = users.id 
+    WHERE registrations.courseId = ?;
+  `;
+  connection.query(query, [courseId], (err, results) => {
+    if (err) {
+      res.status(500).send('Error fetching students');
+    } else {
+      res.json(results);
+    }
+  });
+});
+
+// 获取学生的评价
+app.get('/studentEvaluation', (req, res) => {
+  const { courseId, studentId } = req.query;
+  const query = `
+    SELECT * FROM student_evaluations 
+    WHERE course_id = ? AND student_id = ?;
+  `;
+  connection.query(query, [courseId, studentId], (err, results) => {
+    if (err) {
+      res.status(500).send('Error fetching evaluation');
+    } else {
+      res.json(results.length > 0 ? results[0] : null);
+    }
+  });
+});
+
+// 提交学生评价
+app.post('/submitEvaluation', (req, res) => {
+  const { courseId, studentId, grade, comment } = req.body;
+  const query = `
+    INSERT INTO student_evaluations (course_id, student_id, grade, comment) 
+    VALUES (?, ?, ?, ?) 
+    ON DUPLICATE KEY UPDATE grade = VALUES(grade), comment = VALUES(comment);
+  `;
+  connection.query(query, [courseId, studentId, grade, comment], (err, results) => {
+    if (err) {
+      res.status(500).send('Error submitting evaluation');
+    } else {
+      res.status(201).json({ message: 'Evaluation submitted successfully' });
+    }
+  });
+});

@@ -1,0 +1,21 @@
+<div class="container mt-5">
+    <div class="row mb-4">
+      <div class="col">
+        <h1>Manage Students for {{ courseName }}</h1>
+        <a routerLink="/teacher-center" class="btn btn-primary">
+          ← Back to Teacher Center
+        </a>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col">
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let student of students">
+            <a [routerLink]="['/student-evaluation', courseId, student.id, courseName]">{{ student.name }}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  

@@ -17,6 +17,8 @@ import { AuthService } from './auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { StudentCenterComponent } from './student-center/student-center.component';
 import { TeacherCenterComponent } from './teacher-center/teacher-center.component';
+import { StudentManagementComponent } from './student-management/student-management.component';
+import { StudentEvaluationComponent } from './student-evaluation/student-evaluation.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { TeacherCenterComponent } from './teacher-center/teacher-center.componen
     CourseDetailComponent,
     LoginComponent,
     StudentCenterComponent,
-    TeacherCenterComponent
+    TeacherCenterComponent,
+    StudentManagementComponent,
+    StudentEvaluationComponent
   ],
   imports: [
     BrowserModule,

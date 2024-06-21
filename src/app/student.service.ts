@@ -26,4 +26,8 @@ export class StudentService {
   submitReview(reviewData: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/submitReview`, reviewData);
   }
+
+  getStudentEvaluation(courseId: number, studentId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/studentEvaluation`, { params: { courseId: courseId.toString(), studentId: studentId.toString() } });
+  }
 }
