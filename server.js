@@ -413,3 +413,52 @@ app.post('/submitEvaluation', (req, res) => {
     }
   });
 });
+
+app.get('/isCourseRegistered', (req, res) => {
+  const studentId = req.query.studentId;
+  const courseId = req.query.courseId;
+
+  if (!studentId || !courseId) {
+    res.status(400).send('Missing studentId or courseId');
+    return;
+  }
+
+  const query = 'SELECT * FROM registrations WHERE studentId = ? AND courseId = ?';
+  connection.query(query, [studentId, courseId], (err, results) => {
+    if (err) {
+      res.status(500).send('Error checking course registration');
+      return;
+    }
+
+    if (results.length > 0) {
+      res.json({ registered: true });
+    } else {
+      res.json({ registered: false });
+    }
+  });
+});
+
+
+app.get('/studentCourses', (req, res) => {
+  const studentId = req.query.studentId;
+  if (!studentId) {
+    res.status(400).send('Missing studentId');
+    return;
+  }
+
+  const query = `
+    SELECT courses.*, course_schedule.time, course_schedule.day
+    FROM courses
+    INNER JOIN registrations ON courses.id = registrations.courseId
+    INNER JOIN course_schedule ON courses.id = course_schedule.courseId
+    WHERE registrations.studentId = ?;
+  `;
+  connection.query(query, [studentId], (err, results) => {
+    if (err) {
+      res.status(500).send('Error fetching student courses');
+      return;
+    }
+
+    res.json(results);
+  });
+});

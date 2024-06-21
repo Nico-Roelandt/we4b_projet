@@ -19,6 +19,9 @@ import { StudentCenterComponent } from './student-center/student-center.componen
 import { TeacherCenterComponent } from './teacher-center/teacher-center.component';
 import { StudentManagementComponent } from './student-management/student-management.component';
 import { StudentEvaluationComponent } from './student-evaluation/student-evaluation.component';
+import { HomePageComponent } from './home-page/home-page.component';
+import { StudentCommentComponent } from './student-comment/student-comment.component';
+import { CoursePlanningComponent } from './course-planning/course-planning.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +34,10 @@ import { StudentEvaluationComponent } from './student-evaluation/student-evaluat
     StudentCenterComponent,
     TeacherCenterComponent,
     StudentManagementComponent,
-    StudentEvaluationComponent
+    StudentEvaluationComponent,
+    HomePageComponent,
+    StudentCommentComponent,
+    CoursePlanningComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,36 @@
+<div class="container mt-5">
+    <h1>Planification des Cours</h1>
+    
+    <div class="filters">
+      <h2>Filtrer les Cours</h2>
+      <div class="form-group">
+        <label for="semester">Semestre</label>
+        <select id="semester" [(ngModel)]="selectedSemester" (change)="filterCourses()">
+          <option *ngFor="let semester of semesters" [value]="semester">{{ semester }}</option>
+        </select>
+      </div>
+    </div>
+    
+    <div class="course-schedule">
+      <h2>Emploi du Temps</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Heure</th>
+            <th>Lundi</th>
+            <th>Mardi</th>
+            <th>Mercredi</th>
+            <th>Jeudi</th>
+            <th>Vendredi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let time of timeSlots">
+            <td>{{ time }}</td>
+            <td *ngFor="let day of days">{{ getCourseAt(time, day) }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
