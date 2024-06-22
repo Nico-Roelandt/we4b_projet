@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： 127.0.0.1
--- 生成日期： 2024-06-21 14:51:42
+-- 生成日期： 2024-06-21 23:56:07
 -- 服务器版本： 10.4.32-MariaDB
 -- PHP 版本： 8.2.12
 
@@ -238,16 +238,26 @@ CREATE TABLE `users` (
   `username` varchar(50) DEFAULT NULL,
   `password` varchar(50) DEFAULT NULL,
   `role` varchar(20) DEFAULT NULL,
-  `name` varchar(100) DEFAULT NULL
+  `name` varchar(100) DEFAULT NULL,
+  `avatar_url` varchar(255) DEFAULT NULL,
+  `gender` varchar(10) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `bio` text DEFAULT NULL,
+  `school` varchar(100) DEFAULT NULL,
+  `department` varchar(100) DEFAULT NULL,
+  `awards` text DEFAULT NULL,
+  `office_hours` varchar(100) DEFAULT NULL,
+  `research_achievements` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 转存表中的数据 `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `role`, `name`) VALUES
-(1, 'student1', 'password1', 'student', 'Student One'),
-(2, 'teacher1', 'password1', 'teacher', 'Teacher One');
+INSERT INTO `users` (`id`, `username`, `password`, `role`, `name`, `avatar_url`, `gender`, `email`, `phone`, `bio`, `school`, `department`, `awards`, `office_hours`, `research_achievements`) VALUES
+(1, 'student1', 'password1', 'student', 'Student One', 'src/assets/default.jpg', 'male', 'test@gmail.com', '12345678', 'Hello', 'UTBM', 'INFO', 'awards', NULL, NULL),
+(2, 'teacher1', 'password1', 'teacher', 'Teacher One', 'src/assets/default.jpg', 'female', 'teacher@utbm.fr', '123123123', 'Bonjour', 'UTBM', 'INFO', NULL, '8:00-18:00', 'technology');
 
 --
 -- 转储表的索引

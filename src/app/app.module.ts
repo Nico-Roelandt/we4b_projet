@@ -19,6 +19,7 @@ import { StudentCenterComponent } from './student-center/student-center.componen
 import { TeacherCenterComponent } from './teacher-center/teacher-center.component';
 import { StudentManagementComponent } from './student-management/student-management.component';
 import { StudentEvaluationComponent } from './student-evaluation/student-evaluation.component';
+import { PersonalInfoComponent } from './personal-info/personal-info.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { StudentEvaluationComponent } from './student-evaluation/student-evaluat
     StudentCenterComponent,
     TeacherCenterComponent,
     StudentManagementComponent,
-    StudentEvaluationComponent
+    StudentEvaluationComponent,
+    PersonalInfoComponent
   ],
   imports: [
     BrowserModule,

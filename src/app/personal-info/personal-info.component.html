@@ -1,0 +1,59 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <img [src]="userInfo.avatar_url" class="card-img-top" alt="User Avatar">
+        <div class="card-body">
+          <h5 class="card-title">{{ userInfo.name || 'Nom non disponible' }}</h5>
+          <p class="card-text"><strong>Sexe:</strong> {{ userInfo.gender || 'Non disponible' }}</p>
+          <p class="card-text"><strong>Email:</strong> {{ userInfo.email || 'Non disponible' }}</p>
+          <p class="card-text"><strong>Téléphone:</strong> {{ userInfo.phone || 'Non disponible' }}</p>
+          <p class="card-text"><strong>École:</strong> {{ userInfo.school || 'Non disponible' }}</p>
+          <p class="card-text"><strong>Département:</strong> {{ userInfo.department || 'Non disponible' }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Biographie</h5>
+          <p class="card-text">{{ userInfo.bio || 'Aucune biographie disponible' }}</p>
+        </div>
+      </div>
+      <div class="card mb-3" *ngIf="userRole === 'student'">
+        <div class="card-body">
+          <h5 class="card-title">Cours sélectionnés</h5>
+          <ul>
+            <li *ngFor="let course of userInfo.studentCourses">{{ course }}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card mb-3" *ngIf="userRole === 'teacher'">
+        <div class="card-body">
+          <h5 class="card-title">Cours enseignés</h5>
+          <ul>
+            <li *ngFor="let course of userInfo.teacherCourses">{{ course }}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card mb-3" *ngIf="userRole === 'student' && userInfo.awards">
+        <div class="card-body">
+          <h5 class="card-title">Récompenses</h5>
+          <p class="card-text">{{ userInfo.awards }}</p>
+        </div>
+      </div>
+      <div class="card mb-3" *ngIf="userRole === 'teacher' && userInfo.office_hours">
+        <div class="card-body">
+          <h5 class="card-title">Heures de bureau</h5>
+          <p class="card-text">{{ userInfo.office_hours }}</p>
+        </div>
+      </div>
+      <div class="card mb-3" *ngIf="userRole === 'teacher' && userInfo.research_achievements">
+        <div class="card-body">
+          <h5 class="card-title">Réalisations de recherche</h5>
+          <p class="card-text">{{ userInfo.research_achievements }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
