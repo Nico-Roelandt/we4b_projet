@@ -429,52 +429,7 @@ app.get('/userInfo', (req, res) => {
   });
 });
 
-/* these are personal-info page test API
-app.get('/userInfo', (req, res) => {
-  const userId = req.query.userId;
-  const query = `
-    SELECT 
-      users.*, 
-      GROUP_CONCAT(courses.courseName, ' (', courses.courseCode, ')') as courses 
-    FROM users 
-    LEFT JOIN registrations ON users.id = registrations.studentId 
-    LEFT JOIN courses ON registrations.courseId = courses.id 
-    WHERE users.id = ?;
-  `;
-  connection.query(query, [userId], (err, results) => {
-    if (err) {
-      res.status(500).send('Error fetching user information');
-    } else {
-      res.json(results[0]);
-    }
-  });
-});
-
-
-app.get('/userInfo', (req, res) => {
-  const userId = req.query.userId;
-  const userRoleQuery = `
-    SELECT 
-      users.*, 
-      IF(users.role = 'student', 
-        GROUP_CONCAT(CONCAT(courses.courseName, ' (', courses.courseCode, ')')) AS courses, 
-        GROUP_CONCAT(CONCAT(courses.courseName, ' (', courses.courseCode, ')')) AS courses 
-      ) AS courses
-    FROM users 
-    LEFT JOIN registrations ON users.id = registrations.studentId 
-    LEFT JOIN courses ON registrations.courseId = courses.id 
-    WHERE users.id = ?;
-  `;
-  connection.query(userRoleQuery, [userId], (err, results) => {
-    if (err) {
-      res.status(500).send('Error fetching user information');
-    } else {
-      res.json(results[0] || {});
-    }
-  });
-});
-
-
+// this is the API for personal-info but can not show courses
 app.get('/userInfo', (req, res) => {
   const userId = req.query.userId;
   const userQuery = `
@@ -486,49 +441,6 @@ app.get('/userInfo', (req, res) => {
     FROM users 
     LEFT JOIN registrations ON users.id = registrations.studentId 
     LEFT JOIN courses ON registrations.courseId = courses.id 
-    WHERE users.id = ? 
-    GROUP BY users.id;
-  `;
-  connection.query(userQuery, [userId], (err, results) => {
-    if (err) {
-      res.status(500).send('Error fetching user information');
-    } else {
-      res.json(results[0] || {});
-    }
-  });
-});
-*/
-// Route to get courses for a specific student
-app.get('/studentCourses/:studentId', (req, res) => {
-  const studentId = req.params.studentId;
-  const query = `
-    SELECT courses.courseName
-    FROM courses
-    INNER JOIN registrations ON courses.id = registrations.courseId
-    WHERE registrations.studentId = ?;
-  `;
-  connection.query(query, [studentId], (err, results) => {
-    if (err) {
-      res.status(500).send('Error fetching student courses');
-    } else {
-      res.json(results);
-    }
-  });
-});
-
-app.get('/userInfo', (req, res) => {
-  const userId = req.query.userId;
-  const userQuery = `
-    SELECT 
-      users.*, 
-      users.role,
-      GROUP_CONCAT(DISTINCT CONCAT(courses.courseName, ' (', courses.courseCode, ')')) AS studentCourses,
-      GROUP_CONCAT(DISTINCT CONCAT(taughtCourses.courseName, ' (', taughtCourses.courseCode, ')')) AS teacherCourses
-    FROM users 
-    LEFT JOIN registrations ON users.id = registrations.studentId 
-    LEFT JOIN courses ON registrations.courseId = courses.id 
-    LEFT JOIN course_teachers ON users.id = course_teachers.teacher_name
-    LEFT JOIN courses AS taughtCourses ON course_teachers.course_id = taughtCourses.id 
     WHERE users.id = ? 
     GROUP BY users.id;
   `;

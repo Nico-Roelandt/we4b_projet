@@ -1,0 +1,28 @@
+<div class="container mt-5">
+    <h1>Commentaires des étudiants</h1>
+    
+    <div class="comments-section">
+      <h2>Liste des commentaires</h2>
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let comment of comments">
+          <strong>{{ comment.author }}</strong>: {{ comment.content }}
+        </li>
+      </ul>
+    </div>
+  
+    <div class="comment-form mt-4">
+      <h2>Ajouter un commentaire</h2>
+      <form (ngSubmit)="addComment()">
+        <div class="mb-3">
+          <label for="author" class="form-label">Auteur</label>
+          <input type="text" id="author" class="form-control" [(ngModel)]="newComment.author" name="author" required>
+        </div>
+        <div class="mb-3">
+          <label for="content" class="form-label">Commentaire</label>
+          <textarea id="content" class="form-control" [(ngModel)]="newComment.content" name="content" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Soumettre</button>
+      </form>
+    </div>
+  </div>
+  

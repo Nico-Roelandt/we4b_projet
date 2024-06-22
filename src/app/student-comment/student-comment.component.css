@@ -1,0 +1,21 @@
+.container {
+    max-width: 800px;
+    margin: auto;
+  }
+  
+  .comments-section {
+    margin-top: 20px;
+  }
+  
+  .comment-form {
+    margin-top: 40px;
+  }
+  
+  .comment-form .form-label {
+    font-weight: bold;
+  }
+  
+  .comment-form .btn {
+    width: 100%;
+  }
+  

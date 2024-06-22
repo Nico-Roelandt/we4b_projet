@@ -20,6 +20,9 @@ import { TeacherCenterComponent } from './teacher-center/teacher-center.componen
 import { StudentManagementComponent } from './student-management/student-management.component';
 import { StudentEvaluationComponent } from './student-evaluation/student-evaluation.component';
 import { PersonalInfoComponent } from './personal-info/personal-info.component';
+import { HomePageComponent } from './home-page/home-page.component';
+import { StudentCommentComponent } from './student-comment/student-comment.component';
+import { CoursePlanningComponent } from './course-planning/course-planning.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,10 @@ import { PersonalInfoComponent } from './personal-info/personal-info.component';
     TeacherCenterComponent,
     StudentManagementComponent,
     StudentEvaluationComponent,
-    PersonalInfoComponent
+    PersonalInfoComponent,
+    HomePageComponent,
+    StudentCommentComponent,
+    CoursePlanningComponent
   ],
   imports: [
     BrowserModule,
