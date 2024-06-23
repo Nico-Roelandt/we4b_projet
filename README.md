@@ -19,3 +19,9 @@ ng serve
 
 Import web4_database in you database server
 Change database information in server.js
+
+# Group members
+Nicolas ROELANDT 
+Elie VITRAI 
+Haoqi TAN
+Yangran LIU
