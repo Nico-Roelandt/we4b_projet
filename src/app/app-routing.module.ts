@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'student-management/:courseId/:courseName', component: StudentManagementComponent },
   { path: 'student-evaluation/:courseId/:studentId/:courseName', component: StudentEvaluationComponent },
   { path: 'personal-info', component: PersonalInfoComponent },
-  { path: ' ',component : HomePageComponent },
+  { path: '',component : HomePageComponent },
   { path: 'student-comment',component : StudentCommentComponent},
   { path: 'course-planning', component: CoursePlanningComponent },
 ];

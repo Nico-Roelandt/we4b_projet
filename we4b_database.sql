@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jun 21, 2024 at 11:53 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Hôte : 127.0.0.1
+-- Généré le : sam. 22 juin 2024 à 22:34
+-- Version du serveur : 10.4.24-MariaDB
+-- Version de PHP : 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,22 +18,22 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `we4b_database`
+-- Base de données : `we4b_database`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `branches`
+-- Structure de la table `branches`
 --
 
 CREATE TABLE `branches` (
   `id` int(11) NOT NULL,
   `name` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `branches`
+-- Déchargement des données de la table `branches`
 --
 
 INSERT INTO `branches` (`id`, `name`) VALUES
@@ -46,16 +46,16 @@ INSERT INTO `branches` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `categories`
+-- Structure de la table `categories`
 --
 
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
   `name` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `categories`
+-- Déchargement des données de la table `categories`
 --
 
 INSERT INTO `categories` (`id`, `name`) VALUES
@@ -66,13 +66,13 @@ INSERT INTO `categories` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `courses`
+-- Structure de la table `courses`
 --
 
 CREATE TABLE `courses` (
   `id` int(11) NOT NULL,
-  `courseManager` varchar(100) DEFAULT NULL,
   `courseName` varchar(100) DEFAULT NULL,
+  `courseManager` varchar(100) DEFAULT NULL,
   `courseCode` varchar(50) DEFAULT NULL,
   `branch_id` int(11) DEFAULT NULL,
   `major_id` int(11) DEFAULT NULL,
@@ -82,33 +82,40 @@ CREATE TABLE `courses` (
   `bibliography` varchar(255) DEFAULT NULL,
   `location_id` int(11) DEFAULT NULL,
   `program` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `courses`
+-- Déchargement des données de la table `courses`
 --
 
-INSERT INTO `courses` (`id`, `courseManager`, `courseName`, `courseCode`, `branch_id`, `major_id`, `credits`, `seatLimit`, `studentsRegistered`, `bibliography`, `location_id`, `program`) VALUES
-(1, 'Manager Name', 'Course Name', 'COURSE101', 1, 1, 3, 30, 0, 'Bibliography details', 1, 'Course program details'),
-(2, 'teacher1', 'Optique', 'OTP201', 1, 1, 2, 35, 0, 'Book 1 by Elie Vitrai', 3, 'Un cours à propos des optiques'),
-(3, 'teacher1', 'Littérature', 'LT01', 2, 2, 2, 50, 0, 'Book 5', 4, ''),
-(4, 'teacher1', 'Relations internationales', 'CC01', 5, 1, 5, 30, 0, 'BOOK 3', 4, 'Explorer les relations internationales');
+INSERT INTO `courses` (`id`, `courseName`, `courseManager`, `courseCode`, `branch_id`, `major_id`, `credits`, `seatLimit`, `studentsRegistered`, `bibliography`, `location_id`, `program`) VALUES
+(1, 'Course Name', 'Manager Name', 'COURSE101', 1, 1, 3, 30, 0, 'Bibliography details', 1, 'Course program details'),
+(2, 'Optique', 'teacher1', 'OTP201', 1, 1, 2, 35, 0, 'Book 1 by Elie Vitrai', 3, 'Un cours à propos des optiques'),
+(3, 'Littérature', 'teacher1', 'LT01', 2, 2, 2, 50, 0, 'Book 5', 4, ''),
+(4, 'Relations internationales', 'teacher1', 'CC01', 5, 1, 5, 30, 0, 'BOOK 3', 4, 'Explorer les relations internationales');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `course_categories`
+-- Structure de la table `course_categories`
 --
 
 CREATE TABLE `course_categories` (
   `course_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `course_categories`
+--
+
+INSERT INTO `course_categories` (`course_id`, `category_id`) VALUES
+(2, 3);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `course_schedule`
+-- Structure de la table `course_schedule`
 --
 
 CREATE TABLE `course_schedule` (
@@ -116,10 +123,10 @@ CREATE TABLE `course_schedule` (
   `courseId` int(11) NOT NULL,
   `time` varchar(10) NOT NULL,
   `day` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `course_schedule`
+-- Déchargement des données de la table `course_schedule`
 --
 
 INSERT INTO `course_schedule` (`id`, `courseId`, `time`, `day`) VALUES
@@ -130,27 +137,27 @@ INSERT INTO `course_schedule` (`id`, `courseId`, `time`, `day`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `course_teachers`
+-- Structure de la table `course_teachers`
 --
 
 CREATE TABLE `course_teachers` (
   `course_id` int(11) NOT NULL,
   `teacher_name` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `locations`
+-- Structure de la table `locations`
 --
 
 CREATE TABLE `locations` (
   `id` int(11) NOT NULL,
   `name` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `locations`
+-- Déchargement des données de la table `locations`
 --
 
 INSERT INTO `locations` (`id`, `name`) VALUES
@@ -163,16 +170,16 @@ INSERT INTO `locations` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `majors`
+-- Structure de la table `majors`
 --
 
 CREATE TABLE `majors` (
   `id` int(11) NOT NULL,
   `name` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `majors`
+-- Déchargement des données de la table `majors`
 --
 
 INSERT INTO `majors` (`id`, `name`) VALUES
@@ -183,7 +190,7 @@ INSERT INTO `majors` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `registrations`
+-- Structure de la table `registrations`
 --
 
 CREATE TABLE `registrations` (
@@ -191,10 +198,10 @@ CREATE TABLE `registrations` (
   `studentId` int(11) NOT NULL,
   `courseId` int(11) NOT NULL,
   `courseCode` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `registrations`
+-- Déchargement des données de la table `registrations`
 --
 
 INSERT INTO `registrations` (`id`, `studentId`, `courseId`, `courseCode`) VALUES
@@ -206,7 +213,7 @@ INSERT INTO `registrations` (`id`, `studentId`, `courseId`, `courseCode`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `reviews`
+-- Structure de la table `reviews`
 --
 
 CREATE TABLE `reviews` (
@@ -218,10 +225,10 @@ CREATE TABLE `reviews` (
   `subject` int(11) DEFAULT NULL,
   `personalAppreciation` int(11) DEFAULT NULL,
   `comment` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `reviews`
+-- Déchargement des données de la table `reviews`
 --
 
 INSERT INTO `reviews` (`id`, `courseId`, `studentId`, `theory`, `practice`, `subject`, `personalAppreciation`, `comment`) VALUES
@@ -230,7 +237,7 @@ INSERT INTO `reviews` (`id`, `courseId`, `studentId`, `theory`, `practice`, `sub
 -- --------------------------------------------------------
 
 --
--- Table structure for table `student_evaluations`
+-- Structure de la table `student_evaluations`
 --
 
 CREATE TABLE `student_evaluations` (
@@ -239,10 +246,10 @@ CREATE TABLE `student_evaluations` (
   `student_id` int(11) NOT NULL,
   `grade` char(1) NOT NULL,
   `comment` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `student_evaluations`
+-- Déchargement des données de la table `student_evaluations`
 --
 
 INSERT INTO `student_evaluations` (`id`, `course_id`, `student_id`, `grade`, `comment`) VALUES
@@ -251,7 +258,7 @@ INSERT INTO `student_evaluations` (`id`, `course_id`, `student_id`, `grade`, `co
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Structure de la table `users`
 --
 
 CREATE TABLE `users` (
@@ -270,35 +277,35 @@ CREATE TABLE `users` (
   `awards` text DEFAULT NULL,
   `office_hours` varchar(100) DEFAULT NULL,
   `research_achievements` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `users`
+-- Déchargement des données de la table `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `role`, `name`, `avatar_url`, `gender`, `email`, `phone`, `bio`, `school`, `department`, `awards`, `office_hours`, `research_achievements`) VALUES
-(1, 'student1', 'password1', 'student', 'Student One', 'src/assets/default.jpg', 'male', 'test@gmail.com', '12345678', 'Hello', 'UTBM', 'INFO', 'awards', NULL, NULL),
-(2, 'teacher1', 'password1', 'teacher', 'Teacher One', 'src/assets/default.jpg', 'female', 'teacher@utbm.fr', '123123123', 'Bonjour', 'UTBM', 'INFO', NULL, '8:00-18:00', 'technology');
+(1, 'student1', 'password1', 'student', 'Student One', 'assets/default.jpg', 'male', 'test@gmail.com', '12345678', 'Hello', 'UTBM', 'INFO', 'awards', NULL, NULL),
+(2, 'teacher1', 'password1', 'teacher', 'Teacher One', 'assets/default.jpg', 'female', 'teacher@utbm.fr', '123123123', 'Bonjour', 'UTBM', 'INFO', NULL, '8:00-18:00', 'technology');
 
 --
--- Indexes for dumped tables
+-- Index pour les tables déchargées
 --
 
 --
--- Indexes for table `branches`
+-- Index pour la table `branches`
 --
 ALTER TABLE `branches`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`);
 
 --
--- Indexes for table `categories`
+-- Index pour la table `categories`
 --
 ALTER TABLE `categories`
   ADD KEY `id` (`id`);
 
 --
--- Indexes for table `courses`
+-- Index pour la table `courses`
 --
 ALTER TABLE `courses`
   ADD PRIMARY KEY (`id`),
@@ -307,33 +314,33 @@ ALTER TABLE `courses`
   ADD KEY `location_id` (`location_id`);
 
 --
--- Indexes for table `course_categories`
+-- Index pour la table `course_categories`
 --
 ALTER TABLE `course_categories`
   ADD PRIMARY KEY (`course_id`,`category_id`),
   ADD KEY `category_id` (`category_id`);
 
 --
--- Indexes for table `course_schedule`
+-- Index pour la table `course_schedule`
 --
 ALTER TABLE `course_schedule`
   ADD PRIMARY KEY (`id`),
   ADD KEY `courseId` (`courseId`);
 
 --
--- Indexes for table `course_teachers`
+-- Index pour la table `course_teachers`
 --
 ALTER TABLE `course_teachers`
   ADD PRIMARY KEY (`course_id`,`teacher_name`);
 
 --
--- Indexes for table `locations`
+-- Index pour la table `locations`
 --
 ALTER TABLE `locations`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `majors`
+-- Index pour la table `majors`
 --
 ALTER TABLE `majors`
   ADD PRIMARY KEY (`id`),
@@ -341,7 +348,7 @@ ALTER TABLE `majors`
   ADD KEY `id_2` (`id`);
 
 --
--- Indexes for table `registrations`
+-- Index pour la table `registrations`
 --
 ALTER TABLE `registrations`
   ADD PRIMARY KEY (`id`),
@@ -349,7 +356,7 @@ ALTER TABLE `registrations`
   ADD KEY `courseId` (`courseId`);
 
 --
--- Indexes for table `reviews`
+-- Index pour la table `reviews`
 --
 ALTER TABLE `reviews`
   ADD PRIMARY KEY (`id`),
@@ -357,7 +364,7 @@ ALTER TABLE `reviews`
   ADD KEY `studentId` (`studentId`);
 
 --
--- Indexes for table `student_evaluations`
+-- Index pour la table `student_evaluations`
 --
 ALTER TABLE `student_evaluations`
   ADD PRIMARY KEY (`id`),
@@ -365,45 +372,45 @@ ALTER TABLE `student_evaluations`
   ADD KEY `student_id` (`student_id`);
 
 --
--- Indexes for table `users`
+-- Index pour la table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT pour les tables déchargées
 --
 
 --
--- AUTO_INCREMENT for table `courses`
+-- AUTO_INCREMENT pour la table `courses`
 --
 ALTER TABLE `courses`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `course_schedule`
+-- AUTO_INCREMENT pour la table `course_schedule`
 --
 ALTER TABLE `course_schedule`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `registrations`
+-- AUTO_INCREMENT pour la table `registrations`
 --
 ALTER TABLE `registrations`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
--- AUTO_INCREMENT for table `student_evaluations`
+-- AUTO_INCREMENT pour la table `student_evaluations`
 --
 ALTER TABLE `student_evaluations`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- Constraints for dumped tables
+-- Contraintes pour les tables déchargées
 --
 
 --
--- Constraints for table `courses`
+-- Contraintes pour la table `courses`
 --
 ALTER TABLE `courses`
   ADD CONSTRAINT `courses_ibfk_1` FOREIGN KEY (`branch_id`) REFERENCES `branches` (`id`),
@@ -411,39 +418,40 @@ ALTER TABLE `courses`
   ADD CONSTRAINT `courses_ibfk_3` FOREIGN KEY (`location_id`) REFERENCES `locations` (`id`);
 
 --
--- Constraints for table `course_categories`
+-- Contraintes pour la table `course_categories`
 --
 ALTER TABLE `course_categories`
-  ADD CONSTRAINT `course_categories_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`);
+  ADD CONSTRAINT `course_categories_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`),
+  ADD CONSTRAINT `course_categories_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`);
 
 --
--- Constraints for table `course_schedule`
+-- Contraintes pour la table `course_schedule`
 --
 ALTER TABLE `course_schedule`
   ADD CONSTRAINT `course_schedule_ibfk_1` FOREIGN KEY (`courseId`) REFERENCES `courses` (`id`);
 
 --
--- Constraints for table `course_teachers`
+-- Contraintes pour la table `course_teachers`
 --
 ALTER TABLE `course_teachers`
   ADD CONSTRAINT `course_teachers_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`);
 
 --
--- Constraints for table `registrations`
+-- Contraintes pour la table `registrations`
 --
 ALTER TABLE `registrations`
   ADD CONSTRAINT `registrations_ibfk_1` FOREIGN KEY (`courseId`) REFERENCES `courses` (`id`),
   ADD CONSTRAINT `registrations_ibfk_2` FOREIGN KEY (`studentId`) REFERENCES `users` (`id`);
 
 --
--- Constraints for table `reviews`
+-- Contraintes pour la table `reviews`
 --
 ALTER TABLE `reviews`
   ADD CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`studentId`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`courseId`) REFERENCES `courses` (`id`);
 
 --
--- Constraints for table `student_evaluations`
+-- Contraintes pour la table `student_evaluations`
 --
 ALTER TABLE `student_evaluations`
   ADD CONSTRAINT `student_evaluations_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`),

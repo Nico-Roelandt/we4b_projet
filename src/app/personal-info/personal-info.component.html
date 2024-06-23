@@ -24,7 +24,7 @@
         <div class="card-body">
           <h5 class="card-title">Cours sélectionnés</h5>
           <ul>
-            <li *ngFor="let course of userInfo.studentCourses">{{ course }}</li>
+            <li *ngFor="let course of userInfo.studentCourses.courses">{{ course.courseName }}</li>
           </ul>
         </div>
       </div>

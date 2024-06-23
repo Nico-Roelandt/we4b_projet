@@ -9,9 +9,8 @@
           <h5 class="card-title">{{ course.courseName }}</h5>
           <p class="card-text"><strong>Code:</strong> {{ course.courseCode }}</p>
           <p class="card-text"><strong>Crédits:</strong> {{ course.credits }}</p>
-          <p class="card-text"><strong>Professeur:</strong> {{ course.teacherNames }}</p>
           <button class="btn btn-primary me-2" (click)="viewCourseDetails(course.courseCode)">Voir les détails</button>
-          <button class="btn btn-secondary me-2" (click)="addCourseReviews(course.id)">Ajouter une avis</button>
+          <button class="btn btn-secondary me-2" (click)="addCourseReviews(course.id)">Ajouter un avis</button>
           <button class="btn btn-danger" (click)="unregisterCourse(course.id)">Désinscription</button>
           <button class="btn btn-info" (click)="viewEvaluation(course.id)">Voir l'évaluation</button>
         </div>

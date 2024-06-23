@@ -10,7 +10,7 @@ import { Toast } from 'bootstrap';
   styleUrls: ['./course-detail.component.css']
 })
 export class CourseDetailComponent implements OnInit {
-  course: any = { teachers: [] }; // Initialisation pour éviter les erreurs de template
+  course: any = { teachers: [] };
   reviews: any[] = [];
 
   constructor(
