@@ -17,6 +17,7 @@ export class LoginComponent {
 
   constructor(private authService: AuthService, private router: Router) { }
 
+  // Connexion
   login() {
     this.authService.login(this.username, this.password, this.role).subscribe(success => {
       if (success) {

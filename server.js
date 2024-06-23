@@ -77,6 +77,7 @@ app.get('/categoriesByCourseId', (req, res) => {
   });
 });
 
+// Route pour obtenir les branches
 app.get('/branches', (req, res) => {
   connection.query('SELECT * FROM branches', (err, results) => {
     if (err) {
@@ -87,6 +88,7 @@ app.get('/branches', (req, res) => {
   });
 });
 
+// Route pour obtenir les majors
 app.get('/majors', (req, res) => {
   connection.query('SELECT * FROM majors', (err, results) => {
     if (err) {
@@ -97,6 +99,7 @@ app.get('/majors', (req, res) => {
   });
 });
 
+// Route pour obtenir les locations
 app.get('/locations', (req, res) => {
   connection.query('SELECT * FROM locations', (err, results) => {
     if (err) {
@@ -227,6 +230,8 @@ app.get('/courseByCode', (req, res) => {
   });
 });
 
+
+// Route pour obtenir les cours enseignés par un enseignant spécifique
 app.get('/studentCourses', (req, res) => {
   const studentId = req.query.studentId;
   if (!studentId) {
@@ -234,6 +239,7 @@ app.get('/studentCourses', (req, res) => {
     return;
   }
 
+  // Requête pour obtenir les cours d'un étudiant
   const query = `
     SELECT courses.*, registrations.id AS registrationId
     FROM courses
@@ -245,8 +251,8 @@ app.get('/studentCourses', (req, res) => {
       res.status(500).send('Error fetching student courses');
       return;
     }
-
     const courses = results;
+    // Requête pour obtenir le total des crédits d'un étudiant
     const creditsQuery = `
       SELECT SUM(courses.credits) AS credits
       FROM courses
@@ -293,6 +299,7 @@ app.get('/reviews', (req, res) => {
   });
 });
 
+// Route pour soumettre une critique
 app.post('/submitReview', (req, res) => {
   const { courseId, studentId, theory, practice, subject, personalAppreciation, comment } = req.body;
   if (!courseId || !studentId || theory === undefined || practice === undefined || subject === undefined || personalAppreciation === undefined || !comment) {
@@ -363,7 +370,7 @@ app.get('/coursesByManager', (req, res) => {
 });
 
 
-// 获取课程的学生名单
+// Route pour obtenir les cours enseignés par un enseignant spécifique
 app.get('/courseStudents', (req, res) => {
   const courseId = req.query.courseId;
   const query = `
@@ -381,7 +388,7 @@ app.get('/courseStudents', (req, res) => {
   });
 });
 
-// 获取学生的评价
+// Route pour obtenir les cours enseignés par un enseignant spécifique
 app.get('/studentEvaluation', (req, res) => {
   const { courseId, studentId } = req.query;
   const query = `
@@ -397,7 +404,7 @@ app.get('/studentEvaluation', (req, res) => {
   });
 });
 
-// 提交学生评价
+// Route pour soumettre une évaluation
 app.post('/submitEvaluation', (req, res) => {
   const { courseId, studentId, grade, comment } = req.body;
   const query = `
@@ -414,7 +421,7 @@ app.post('/submitEvaluation', (req, res) => {
   });
 });
 
-// 获取用户信息
+// Route pour obtenir les cours enseignés par un enseignant spécifique
 app.get('/userInfo', (req, res) => {
   const userId = req.query.userId;
   const query = `
@@ -429,7 +436,7 @@ app.get('/userInfo', (req, res) => {
   });
 });
 
-// this is the API for personal-info but can not show courses
+// Route pour obtenir les cours enseignés par un enseignant spécifique
 app.get('/userInfo', (req, res) => {
   const userId = req.query.userId;
   const userQuery = `

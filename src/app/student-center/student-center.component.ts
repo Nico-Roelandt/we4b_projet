@@ -35,6 +35,7 @@ export class StudentCenterComponent implements OnInit {
     this.loadStudentData();
   }
 
+  // Récupérer les informations de l'étudiant
   loadStudentData() {
     const studentId = this.authService.getStudentId();
     
@@ -45,6 +46,7 @@ export class StudentCenterComponent implements OnInit {
     });
   }
 
+  // Récupérer les évaluations de l'étudiant
   loadEvaluations() {
     const studentId = this.authService.getStudentId();
     this.evaluations = [];
@@ -67,16 +69,18 @@ export class StudentCenterComponent implements OnInit {
     });
   }
 
+  // Soumettre un feedback
   submitFeedback(courseId: number, feedback: string) {
     this.studentService.submitFeedback(courseId, feedback).subscribe(response => {
-      // Logique de traitement après la soumission des commentaires
     });
   }
 
+  // Voir les détails du cours
   viewCourseDetails(coursecode: string) {
     this.router.navigate(['/courses/', coursecode]);
   }
 
+  // Ajouter un avis sur le cours
   addCourseReviews(courseId: number) {
     this.newReview.courseId = courseId;
     this.newReview.studentId = this.authService.getStudentId();
@@ -87,6 +91,7 @@ export class StudentCenterComponent implements OnInit {
     }
   }
 
+  // Voir l'évaluation
   viewEvaluation(courseId: number) {
     const studentId = this.authService.getStudentId();
     this.studentService.getStudentEvaluation(courseId, studentId).subscribe(evaluation => {
@@ -99,6 +104,7 @@ export class StudentCenterComponent implements OnInit {
     });
   }
 
+  // Soumettre l'évaluation
   submitReview() {
     this.studentService.submitReview(this.newReview).subscribe(response => {
       this.showToast('Review submitted successfully.', 'info');
@@ -125,6 +131,7 @@ export class StudentCenterComponent implements OnInit {
     });
   }
 
+  // Mettre à jour l'évaluation
   unregisterCourse(courseId: number) {
     const studentId = this.authService.getStudentId();
     this.studentService.unregisterCourse(studentId, courseId).subscribe(response => {
@@ -136,6 +143,7 @@ export class StudentCenterComponent implements OnInit {
     });
   }
 
+  // Afficher un toast
   private showToast(message: string, type: 'info' | 'error'): void {
     const toastElement = document.getElementById('infoToast');
     if (toastElement) {

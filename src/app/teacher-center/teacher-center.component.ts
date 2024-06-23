@@ -14,7 +14,7 @@ export class TeacherCenterComponent implements OnInit {
   branches: any[] = [];
   majors: any[] = [];
   locations: any[] = [];
-  teachers: string[] = ['Teacher A', 'Teacher B', 'Teacher C']; // Example teacher names
+  teachers: string[] = ['Teacher A', 'Teacher B', 'Teacher C'];
   categories: any[] = [];
 
   newCourse: any = {

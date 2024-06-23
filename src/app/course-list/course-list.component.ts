@@ -28,6 +28,7 @@ export class CourseListComponent implements OnInit {
     });
   }
 
+  // Récupérer les cours
   loadCourses(): void {
     this.courseService.getCourses().subscribe(courses => {
       this.courses = courses.map(course => ({

@@ -19,16 +19,14 @@ export class CoursePlanningComponent implements OnInit {
     this.loadCourses();
   }
 
+  // Récupérer les cours
   loadCourses(): void {
     this.courseService.getCourses().subscribe((data: Course[]) => {
       this.courses = data;
     });
   }
 
-  filterCourses(): void {
-    // 这里可以根据学期进行筛选
-  }
-
+  // Récupérer le cours à un créneau donné
   getCourseAt(time: string, day: string): string {
     const course = this.courses.find(c => c.time === time && c.day === day);
     return course ? course.name : '';

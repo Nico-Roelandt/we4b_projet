@@ -21,7 +21,6 @@ export class StudentCommentComponent implements OnInit {
   }
 
   getComments(): void {
-    // 模拟从服务获取评论数据
     this.comments = [
       { author: 'Student1', content: 'Great course!' },
       { author: 'Student2', content: 'Very informative.' }

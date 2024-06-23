@@ -22,9 +22,9 @@ export class CourseDetailComponent implements OnInit {
 
   ngOnInit(): void {
     const courseCode = this.route.snapshot.paramMap.get('courseCode');
+    // Récupérer les informations du cours et les avis associés
     if (courseCode) {
       this.courseService.getCourseByCourseCode(courseCode).subscribe(course => {
-        // Assurons-nous que les données des enseignants soient correctement traitées
         if (course.teacherNames) {
           course.teachers = course.teacherNames.split(',');
         } else {
@@ -40,7 +40,6 @@ export class CourseDetailComponent implements OnInit {
       console.error('courseCode is null');
     }
 
-    // Ajouter l'écouteur d'événement pour la fermeture de la modal
     this.addModalCloseListener();
   }
 
@@ -50,14 +49,13 @@ export class CourseDetailComponent implements OnInit {
       return;
     }
 
-    const studentId = this.authService.getStudentId(); // Get the student ID from AuthService
+    const studentId = this.authService.getStudentId();
     const courseCode = this.course.courseCode;
-    //Course id provient du backend et doit etre mis sous forme de number
     const courseId = Number(this.course.id);
     console.log('studentId:', studentId);
     console.log('courseId:', courseId);
     console.log('courseCode:', courseCode);
-    //Register
+    // Enregistrer l'étudiant pour le cours
     this.courseService.registerStudentForCourse(studentId, courseId, courseCode).subscribe(response => {
       console.log('response:', response);
       this.showToast('You have successfully registered for the course.', 'success');
@@ -72,6 +70,7 @@ export class CourseDetailComponent implements OnInit {
     });
   }
 
+  // Ajouter un écouteur d'événement pour fermer le modal
   private addModalCloseListener(): void {
     const modalElement = document.getElementById('loginModal');
     if (modalElement) {
@@ -81,6 +80,7 @@ export class CourseDetailComponent implements OnInit {
     }
   }
 
+  // Afficher un toast (erreur ou succès)
   private showToast(message: string, type: 'success' | 'error'): void {
     const toastElement = document.getElementById('courseToast');
     if (toastElement) {

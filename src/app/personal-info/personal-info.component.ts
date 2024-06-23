@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { UserService } from '../user.service';
-import { CourseService } from '../course.service';
 import { StudentService } from '../student.service';
 import { TeacherService } from '../teacher.service';
 
@@ -22,6 +21,7 @@ export class PersonalInfoComponent implements OnInit {
   ngOnInit(): void {
     const userId = this.authService.getStudentId() || this.authService.getTeacherId();
     this.userRole = this.authService.getRole();
+    // Récupérer les informations de l'utilisateur
     this.userService.getUserInfo(userId).subscribe(
       data => {
         this.userInfo = data || {};

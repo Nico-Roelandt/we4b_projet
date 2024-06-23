@@ -15,8 +15,8 @@ export interface Course {
   bibliography: string;
   location_id: number;
   program: string;
-  time: string; // 新增属性
-  day: string;  // 新增属性
+  time: string;
+  day: string; 
   name: string;
 }
 

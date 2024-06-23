@@ -60,4 +60,5 @@ export class TeacherService {
   getStudentName(studentId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/studentName?studentId=${studentId}`);
   }
+
 }

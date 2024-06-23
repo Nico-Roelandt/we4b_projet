@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TeacherService } from '../teacher.service';
+import { CourseService } from '../course.service';
 
 @Component({
   selector: 'app-edit-course',
@@ -8,7 +9,8 @@ import { TeacherService } from '../teacher.service';
   styleUrls: ['./edit-course.component.css']
 })
 export class EditCourseComponent implements OnInit {
-  courseId!: number;  
+  courseCode!: string;  
+  courseId! : number;
   course: any = {
     courseManager: '',
     teachers: '',
@@ -28,13 +30,15 @@ export class EditCourseComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private teacherService: TeacherService,
+    private courseService: CourseService,
     private router: Router
   ) { }
 
+  // Récupérer les informations du cours
   ngOnInit(): void {
-    this.courseId = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
-    this.teacherService.getCourseById(this.courseId).subscribe(course => {
-      // 将课程信息分配给 this.course
+    this.courseId = Number(this.route.snapshot.paramMap.get('courseId'));
+    this.courseCode = this.route.snapshot.paramMap.get('courseCode')!;
+    this.courseService.getCourseByCourseCode(this.courseCode).subscribe(course => {
       this.course = {
         ...course,
         teachers: course.teachers.join(', '),
@@ -43,6 +47,7 @@ export class EditCourseComponent implements OnInit {
     });
   }
 
+  // Enregistrer les modifications
   saveCourse() {
     const updatedCourse = {
       ...this.course,
@@ -55,12 +60,14 @@ export class EditCourseComponent implements OnInit {
     });
   }
 
+  // Supprimer le cours
   deleteCourse() {
     this.teacherService.deleteCourse(this.courseId).subscribe(() => {
       this.router.navigate(['/teacher-center']);
     });
   }
 
+  // Retourner à la page précédente
   goBack() {
     this.router.navigate(['/teacher-center']);
   }
