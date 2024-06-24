@@ -31,4 +31,10 @@ export class CoursePlanningComponent implements OnInit {
     const course = this.courses.find(c => c.time === time && c.day === day);
     return course ? course.name : '';
   }
+
+    // Ajouter la méthode filterCourses
+    filterCourses(): void {
+
+    }
 }
+
